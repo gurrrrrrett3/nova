@@ -64,6 +64,7 @@ export default class RolesModule extends Module {
                 .setCustomId("role_picker_menu")
                 .setPlaceholder("Select a role")
                 .setMinValues(0)
+                .setMaxValues(roles.length)
                 .addOptions(roles.map((role) => ({
                     label: role.name,
                     value: role.roleId,
