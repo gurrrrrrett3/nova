@@ -21,13 +21,14 @@ export default class VoiceModule extends Module {
             if (!newState.channel && oldState.channel && this.voiceChannels.has(oldState.channel.id) && oldState.channel.members.size === 0) {
 
                 // dvc channel is empty
-                await oldState.channel.delete();
                 this.voiceChannels.delete(oldState.channel.id)
+                await oldState.channel.delete();
 
                 return
             }
 
             if (!oldState.channel && newState.channel && newState.member) {
+
                 const dvcChanenlRepo = db.em.getRepository(DvcChannel)
                 const dvcChannel = await dvcChanenlRepo.findOne({
                     channelId: newState.channel.id
