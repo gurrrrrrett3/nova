@@ -5,7 +5,7 @@ const config: Options = {
         'dist/modules/**/entities/*.js'
     ],
     entitiesTs: [
-        'modules/**/entities/*.ts'
+        'src/modules/**/entities/*.ts'
     ],
     type: 'postgresql',
     host: process.env.DB_HOST,
@@ -14,6 +14,6 @@ const config: Options = {
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     debug: true
-  };
-  
+};
+
 export default config;

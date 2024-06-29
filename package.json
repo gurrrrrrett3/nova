@@ -29,7 +29,7 @@
   "mikro-orm": {
     "useTsNode": true,
     "configPaths": [
-      "./core/database/mikro-orm.config.ts"
+      "./src/core/database/mikro-orm.config.ts"
     ]
   },
   "dependencies": {

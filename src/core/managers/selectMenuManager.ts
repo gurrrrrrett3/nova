@@ -1,4 +1,4 @@
-import { Client, Colors, EmbedBuilder, InteractionType } from "discord.js";
+import { Client, Colors, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import Core from "../index.js";
 
 export default class SelectMenuManager {
@@ -29,7 +29,7 @@ export default class SelectMenuManager {
     });
   }
 
-  public registerMenu(id: string, callback: Function) {
+  public registerMenu(id: string, callback: (menu: StringSelectMenuInteraction) => void) {
     this.menus.set(id, callback);
   }
 
