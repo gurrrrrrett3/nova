@@ -266,8 +266,31 @@ const Command = new SlashCommandBuilder()
             const order = interaction.options.getInteger("order", true);
             const guildId = interaction.guildId!;
             const roleId = roleToOrder.id;
+            const roleRepo = db.em.getRepository(RolePickerRole);
 
-            const roleEntity = await db.em.getRepository(RolePickerRole).findOne({
+            // change the order of all roles so that the new role can be inserted at the specified order
+            const roles = await roleRepo.find({
+              guildId
+            });
+
+            const role = roles.find((role) => role.roleId === roleId);
+
+            if (!role) {
+              await interaction.reply({
+                embeds: [
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToOrder.id}> is not in the role picker.`)
+                ]
+              });
+              return;
+            }
+
+            for (const role of roles) {
+              if (role.order >= order) {
+                role.order++;
+              }
+            }
+
+            const roleEntity = await roleRepo.findOne({
               roleId,
               guildId
             });
@@ -282,8 +305,7 @@ const Command = new SlashCommandBuilder()
             }
 
             roleEntity.order = order;
-
-            await db.em.flush();
+            await db.em.persistAndFlush(roleEntity);
 
             await interaction.reply({
               embeds: [
