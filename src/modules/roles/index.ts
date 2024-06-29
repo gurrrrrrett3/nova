@@ -67,8 +67,8 @@ export default class RolesModule extends Module {
                 .addOptions(roles.map((role) => ({
                     label: role.name,
                     value: role.roleId,
-                    description: role.description,
-                    emoji: role.emoji,
+                    description: role.description || undefined,
+                    emoji: role.emoji || undefined,
                     default: memberRoleManager?.cache.has(role.roleId) || false
                 })))
 
