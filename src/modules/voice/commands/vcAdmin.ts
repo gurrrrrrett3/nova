@@ -2,6 +2,7 @@ import { ChannelType, PermissionFlagsBits } from "discord.js";
 import SlashCommandBuilder from "../../../core/loaders/objects/customSlashCommandBuilder.js";
 import { db } from "../../../core/index.js";
 import { DvcChannel } from "../entities/dvcChannel.entity.js";
+import EmbedUtil from "../../util/util/embed.js";
 
 const Command = new SlashCommandBuilder()
     .setName("vcadmin")
@@ -41,6 +42,13 @@ const Command = new SlashCommandBuilder()
                         dvcChannel.channelId = channel.id;
 
                         await db.em.persistAndFlush(dvcChannel);
+
+                        await interaction.reply({
+                            embeds: [
+                                EmbedUtil.baseEmbed(interaction.guild)
+                                    .setDescription(`Set lobby channel to <#${channel.id}>`)
+                            ],
+                        });
                     })
             )
     )
