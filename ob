@@ -1,0 +1,6 @@
+#! /bin/node
+import { execSync } from "child_process";
+import { resolve } from "path";
+execSync(`npx tsx ${resolve("src/cli/index.ts")} ${process.argv.slice(2).join(" ")}`, {
+	stdio: "inherit",
+});

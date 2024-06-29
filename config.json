@@ -1,0 +1,11 @@
+{
+  "core": {
+    "usingDatabase": false,
+    "commandRegisterMode": "global",
+    "guildId": "",
+    "showCommandDeploymentInfo": true,
+    "showCommandCount": true,
+    "showModuleLoadInfo": true,
+    "showInteractionHasExpired": true
+  }
+}

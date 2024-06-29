@@ -1,0 +1,4 @@
+.onebot.pid
+dist
+.env
+node_modules
