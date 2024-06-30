@@ -7,67 +7,65 @@
         "dvc": {
             "name": "dvc",
             "description": "Manage your dynamic voice channel.",
-            "subcommands": {
-                "rename": {
-                    "name": "rename",
-                    "description": "Rename your voice channel.",
-                    "options": {
-                        "name": {
-                            "name": "name",
-                            "description": "The new name for your voice channel."
-                        }
-                    },
-                    "success": "Your voice channel has been renamed to {{name}}.",
-                    "failed": "Failed to rename voice channel."
+            "rename": {
+                "name": "rename",
+                "description": "Rename your voice channel.",
+                "options": {
+                    "name": {
+                        "name": "name",
+                        "description": "The new name for your voice channel."
+                    }
                 },
-                "lock": {
-                    "name": "lock",
-                    "description": "Lock your voice channel.",
-                    "success": "Your voice channel has been locked.",
-                    "failed": "Failed to lock voice channel."
+                "success": "Your voice channel has been renamed to {{name}}.",
+                "failed": "Failed to rename voice channel."
+            },
+            "lock": {
+                "name": "lock",
+                "description": "Lock your voice channel.",
+                "success": "Your voice channel has been locked.",
+                "failed": "Failed to lock voice channel."
+            },
+            "unlock": {
+                "name": "unlock",
+                "description": "Unlock your voice channel.",
+                "success": "Your voice channel has been unlocked.",
+                "failed": "Failed to unlock voice channel."
+            },
+            "hide": {
+                "name": "hide",
+                "description": "Hide your voice channel.",
+                "success": "Your voice channel has been hidden.",
+                "failed": "Failed to hide voice channel."
+            },
+            "show": {
+                "name": "show",
+                "description": "Show your voice channel.",
+                "success": "Your voice channel has been shown.",
+                "failed": "Failed to show voice channel."
+            },
+            "limit": {
+                "name": "limit",
+                "description": "Set the user limit for your voice channel.",
+                "options": {
+                    "limit": {
+                        "name": "limit",
+                        "description": "The new user limit for your voice channel."
+                    }
                 },
-                "unlock": {
-                    "name": "unlock",
-                    "description": "Unlock your voice channel.",
-                    "success": "Your voice channel has been unlocked.",
-                    "failed": "Failed to unlock voice channel."
+                "success": "Your voice channel user limit has been set to {{limit}}.",
+                "failed": "Failed to set voice channel user limit."
+            },
+            "bitrate": {
+                "name": "bitrate",
+                "description": "Set the bitrate for your voice channel.",
+                "options": {
+                    "bitrate": {
+                        "name": "bitrate",
+                        "description": "The new bitrate for your voice channel."
+                    }
                 },
-                "hide": {
-                    "name": "hide",
-                    "description": "Hide your voice channel.",
-                    "success": "Your voice channel has been hidden.",
-                    "failed": "Failed to hide voice channel."
-                },
-                "show": {
-                    "name": "show",
-                    "description": "Show your voice channel.",
-                    "success": "Your voice channel has been shown.",
-                    "failed": "Failed to show voice channel."
-                },
-                "limit": {
-                    "name": "limit",
-                    "description": "Set the user limit for your voice channel.",
-                    "options": {
-                        "limit": {
-                            "name": "limit",
-                            "description": "The new user limit for your voice channel."
-                        }
-                    },
-                    "success": "Your voice channel user limit has been set to {{limit}}.",
-                    "failed": "Failed to set voice channel user limit."
-                },
-                "bitrate": {
-                    "name": "bitrate",
-                    "description": "Set the bitrate for your voice channel.",
-                    "options": {
-                        "bitrate": {
-                            "name": "bitrate",
-                            "description": "The new bitrate for your voice channel."
-                        }
-                    },
-                    "success": "Channel bitrate has been set to {{bitrate}}.",
-                    "failed": "Channel bitrate."
-                }
+                "success": "Channel bitrate has been set to {{bitrate}}.",
+                "failed": "Channel bitrate."
             }
         },
         "vcadmin": {

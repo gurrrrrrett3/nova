@@ -8,7 +8,7 @@ import { t } from "i18next";
 
 const Command = new SlashCommandBuilder()
     .setName("vcadmin")
-    .setDescription("Manage voice channel settings.")
+    .setDescription(t("voice:commands.vcadmin.description"))
     .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.name"))
     .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.description"))
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)

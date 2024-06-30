@@ -41,15 +41,15 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("rename")
-      .setDescription(t("voice:commands.dvc.subcommands.rename.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.description"))
+      .setDescription(t("voice:commands.dvc.rename.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.description"))
       .addStringOption((option) =>
         option
           .setName("name")
-          .setDescription(t("voice:commands.dvc.subcommands.rename.options.name.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.options.name.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.options.name.description"))
+          .setDescription(t("voice:commands.dvc.rename.options.name.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.options.name.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.options.name.description"))
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
@@ -84,9 +84,9 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("lock")
-      .setDescription(t("voice:commands.dvc.subcommands.lock.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.lock.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.lock.description"))
+      .setDescription(t("voice:commands.dvc.lock.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.lock.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.lock.description"))
       .setFunction(async (interaction) => {
         const voiceChannel = await getVoiceChannel(interaction);
         if (!voiceChannel) {
@@ -120,9 +120,9 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("unlock")
-      .setDescription(t("voice:commands.dvc.subcommands.unlock.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.unlock.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.unlock.description"))
+      .setDescription(t("voice:commands.dvc.unlock.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.unlock.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.unlock.description"))
       .setFunction(async (interaction) => {
         const voiceChannel = await getVoiceChannel(interaction);
         if (!voiceChannel) {
@@ -156,9 +156,9 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("hide")
-      .setDescription(t("voice:commands.dvc.subcommands.hide.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.hide.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.hide.description"))
+      .setDescription(t("voice:commands.dvc.hide.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.hide.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.hide.description"))
       .setFunction(async (interaction) => {
         const voiceChannel = await getVoiceChannel(interaction);
         if (!voiceChannel) {
@@ -192,9 +192,9 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("show")
-      .setDescription(t("voice:commands.dvc.subcommands.show.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.show.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.show.description"))
+      .setDescription(t("voice:commands.dvc.show.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.show.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.show.description"))
       .setFunction(async (interaction) => {
         const voiceChannel = await getVoiceChannel(interaction);
         if (!voiceChannel) {
@@ -228,15 +228,15 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("limit")
-      .setDescription(t("voice:commands.dvc.subcommands.limit.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.description"))
+      .setDescription(t("voice:commands.dvc.limit.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.description"))
       .addIntegerOption((option) =>
         option
           .setName("limit")
-          .setDescription(t("voice:commands.dvc.subcommands.limit.options.limit.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.options.limit.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.options.limit.description"))
+          .setDescription(t("voice:commands.dvc.limit.options.limit.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.options.limit.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.options.limit.description"))
           .setMinValue(0)
           .setMaxValue(99)
           .setRequired(true)
@@ -273,15 +273,15 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("bitrate")
-      .setDescription(t("voice:commands.dvc.subcommands.bitrate.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.description"))
+      .setDescription(t("voice:commands.dvc.bitrate.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.description"))
       .addIntegerOption((option) =>
         option
           .setName("bitrate")
-          .setDescription(t("voice:commands.dvc.subcommands.bitrate.options.bitrate.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.options.bitrate.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.options.bitrate.description"))
+          .setDescription(t("voice:commands.dvc.bitrate.options.bitrate.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.options.bitrate.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.options.bitrate.description"))
           .setMinValue(8000)
           .setRequired(true)
       )
