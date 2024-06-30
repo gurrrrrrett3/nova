@@ -1,6 +1,8 @@
 {
     "error": {
-        "dmChannel": "You can't use this command in DMs."
+        "dmChannel": "You can't use this command in DMs.",
+        "noChannel": "That channel doesn't exist.",
+        "notTextChannel": "This command can only be used on text channels."
     },
     "commands": {
         "clear": {
@@ -19,6 +21,31 @@
             "title": "Messages Cleared",
             "success": "Successfully cleared {{amount}} messages.",
             "noMessages": "No messages to clear."
+        },
+        "lock": {
+            "name": "lock",
+            "description": "Locks the channel.",
+            "options": {
+                "channel": {
+                    "name": "channel",
+                    "description": "The channel to lock."
+                },
+                "reason": {
+                    "name": "reason",
+                    "description": "The reason for locking the channel."
+                }
+            },
+            "lock": {
+                "title": "Channel Locked",
+                "success": "{{channel}} has been locked.",
+                "failed": "Failed to lock {{channel}}."
+            },
+            "unlock": {
+                "title": "Channel Unlocked",
+                "success": "{{channel}} has been unlocked.",
+                "failed": "Failed to unlock {{channel}}."
+            },
+            "defaultReason": "No reason provided."
         }
     }
 }

@@ -76,8 +76,8 @@
             "dvc": {
                 "name": "dvc",
                 "description": "Manage dynamic voice channels.",
-                "setLobby": {
-                    "name": "setLobby",
+                "setlobby": {
+                    "name": "setlobby",
                     "description": "Set the lobby voice channel.",
                     "options": {
                         "channel": {

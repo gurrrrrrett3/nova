@@ -16,19 +16,19 @@ const Command = new SlashCommandBuilder()
     .addSubcommandGroup((group) =>
         group
             .setName("dvc")
-            .setDescription("Manage dynamic voice channels.")
+            .setDescription(t("voice:commands.vcadmin.dvc.description"))
             .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.name"))
             .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.description"))
             .addSubcommand((subcommand) =>
                 subcommand
                     .setName("setlobby")
-                    .setDescription("Set the lobby channel for dynamic voice channels.")
+                    .setDescription(t("voice:commands.vcadmin.dvc.setlobby.description"))
                     .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.name"))
                     .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.description"))
                     .addChannelOption((option) =>
                         option
                             .setName("channel")
-                            .setDescription("The channel to set as the lobby.")
+                            .setDescription(t("voice:commands.vcadmin.dvc.setlobby.options.channel.description"))
                             .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.options.channel.name"))
                             .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.options.channel.description"))
                             .setRequired(true)

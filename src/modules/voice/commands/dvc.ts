@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction } from "discord.js";
 import SlashCommandBuilder from "../../../core/loaders/objects/customSlashCommandBuilder.js";
 import VoiceModule from "../index.js";
 import EmbedUtil from "../../util/util/embed.js";
-import i18next from "i18next";
+import i18next, { t } from "i18next";
 import LanguageLoader from "../../../core/loaders/languageLoader.js";
 
 async function getVoiceChannel(interaction: ChatInputCommandInteraction) {
@@ -35,19 +35,19 @@ async function getVoiceChannel(interaction: ChatInputCommandInteraction) {
 
 const Command = new SlashCommandBuilder()
   .setName("dvc")
-  .setDescription("Manage your dynamic voice channel.")
+  .setDescription(t("voice:commands.dvc.description"))
   .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.name"))
   .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.description"))
   .addSubcommand((subcommand) =>
     subcommand
       .setName("rename")
-      .setDescription("Rename your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.rename.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.description"))
       .addStringOption((option) =>
         option
           .setName("name")
-          .setDescription("The new name for your voice channel.")
+          .setDescription(t("voice:commands.dvc.subcommands.rename.options.name.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.options.name.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.rename.options.name.description"))
           .setRequired(true)
@@ -84,7 +84,7 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("lock")
-      .setDescription("Lock your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.lock.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.lock.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.lock.description"))
       .setFunction(async (interaction) => {
@@ -120,7 +120,7 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("unlock")
-      .setDescription("Unlock your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.unlock.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.unlock.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.unlock.description"))
       .setFunction(async (interaction) => {
@@ -156,7 +156,7 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("hide")
-      .setDescription("Hide your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.hide.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.hide.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.hide.description"))
       .setFunction(async (interaction) => {
@@ -192,7 +192,7 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("show")
-      .setDescription("Show your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.show.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.show.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.show.description"))
       .setFunction(async (interaction) => {
@@ -228,13 +228,13 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("limit")
-      .setDescription("Limit the number of users in your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.limit.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.description"))
       .addIntegerOption((option) =>
         option
           .setName("limit")
-          .setDescription("The user limit for your voice channel.")
+          .setDescription(t("voice:commands.dvc.subcommands.limit.options.limit.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.options.limit.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.limit.options.limit.description"))
           .setMinValue(0)
@@ -273,13 +273,13 @@ const Command = new SlashCommandBuilder()
   .addSubcommand((subcommand) =>
     subcommand
       .setName("bitrate")
-      .setDescription("Set the bitrate for your voice channel.")
+      .setDescription(t("voice:commands.dvc.subcommands.bitrate.description"))
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.description"))
       .addIntegerOption((option) =>
         option
           .setName("bitrate")
-          .setDescription("The bitrate for your voice channel.")
+          .setDescription(t("voice:commands.dvc.subcommands.bitrate.options.bitrate.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.options.bitrate.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.subcommands.bitrate.options.bitrate.description"))
           .setMinValue(8000)

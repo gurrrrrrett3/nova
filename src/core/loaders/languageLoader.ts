@@ -14,9 +14,7 @@ export default class LanguageLoader {
         i18next.init({
             fallbackLng: "en-US",
             debug: false,
-            resources: {
-                en: {}
-            }
+            resources: {}
         });
 
         const files = fs.readdirSync(this.langFolder);
@@ -39,11 +37,11 @@ export default class LanguageLoader {
         const keys = i18next.services.resourceStore.data;
         const langs = Object.keys(keys);
 
-        const result: Map<string, string> = new Map();
+        const result: Record<string, string> = {};
 
         for (const lang of langs) {
             const value = i18next.t(key, { lng: lang });
-            result.set(lang, value);
+            result[lang] = value;
         }
 
         return result;

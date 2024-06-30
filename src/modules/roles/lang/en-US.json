@@ -1,0 +1,116 @@
+{
+    "error": {
+        "notAutoAssigned": "{{role}} is not an auto assigned role.",
+        "noAutoAssigned": "No roles are set to be auto assigned.",
+        "notInPicker": "{{role}} is not in the role picker."
+    },
+    "commands": {
+        "roleadmin": {
+            "name": "roleadmin",
+            "description": "Manage role configurations.",
+            "autoroles": {
+                "name": "autoroles",
+                "description": "Manage auto assigned roles.",
+                "add": {
+                    "name": "add",
+                    "description": "Add an auto assigned role.",
+                    "options": {
+                        "role": {
+                            "name": "role",
+                            "description": "The role to add."
+                        }
+                    },
+                    "success": "{{role}} will now be assigned on join."
+                },
+                "remove": {
+                    "name": "remove",
+                    "description": "Remove an auto assigned role.",
+                    "options": {
+                        "role": {
+                            "name": "role",
+                            "description": "The role to remove."
+                        }
+                    },
+                    "success": "{{role}} will no longer be assigned on join."
+                },
+                "list": {
+                    "name": "list",
+                    "description": "List all auto assigned roles.",
+                    "title": "Auto Assigned Roles",
+                    "noRoles": "No roles are set to be auto assigned."
+                }
+            },
+            "rolepicker": {
+                "name": "rolepicker",
+                "description": "Manage role picker configurations",
+                "add": {
+                    "name": "add",
+                    "description": "Add a role to the role picker.",
+                    "options": {
+                        "role": {
+                            "name": "role",
+                            "description": "The role to add."
+                        },
+                        "name": {
+                            "name": "name",
+                            "description": "The name of the role in the picker."
+                        },
+                        "description": {
+                            "name": "description",
+                            "description": "The description of the role in the picker."
+                        },
+                        "emoji": {
+                            "name": "emoji",
+                            "description": "The emoji to use for the role."
+                        }
+                    },
+                    "success": "{{role}} will now be in the role picker."
+                },
+                "remove": {
+                    "name": "remove",
+                    "description": "Remove a role from the role picker.",
+                    "options": {
+                        "role": {
+                            "name": "role",
+                            "description": "The role to remove."
+                        }
+                    },
+                    "success": "{{role}} will no longer be in the role picker."
+                },
+                "list": {
+                    "name": "list",
+                    "description": "List all roles in the role picker.",
+                    "title": "Role Picker",
+                    "noRoles": "No roles are in the role picker."
+                },
+                "order": {
+                    "name": "order",
+                    "description": "Set the order of the roles in the role picker.",
+                    "options": {
+                        "role": {
+                            "name": "role",
+                            "description": "The role to move."
+                        },
+                        "order": {
+                            "name": "position",
+                            "description": "The position to move the role to."
+                        }
+                    },
+                    "success": "{{role}} has been moved to position {{position}}."
+                },
+                "embed": {
+                    "name": "embed",
+                    "description": "Send the role picker embed",
+                    "success": "Role picker embed sent."
+                }
+            }
+        }
+    },
+    "rolepicker": {
+        "title": "Role Picker",
+        "placeholder": "Select your roles!",
+        "success": "Roles updated.",
+        "buttonPrompt": "Click the button below to get your roles!",
+        "buttonLabel": "Get Roles"
+    }
+}

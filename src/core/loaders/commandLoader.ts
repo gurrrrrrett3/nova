@@ -4,6 +4,8 @@ import Core, { bot } from "../index.js";
 import { Logger } from "../utils/logger.js";
 import { CustomCommandBuilder } from "./loaderTypes.js";
 import { exec } from "child_process";
+import { writeFileSync } from "fs";
+import { resolve } from "path";
 export default class CommandLoader {
   public client: Client;
   public commands: Collection<string, CustomCommandBuilder> = new Collection();
@@ -72,6 +74,8 @@ export default class CommandLoader {
     const rest = new REST({ version: "10" }).setToken(
       (this.client.token as string) ?? (process.env.TOKEN as string)
     );
+
+    writeFileSync(resolve("./dist/commands.json"), JSON.stringify(commandsToDeploy, null, 2));
 
     this.client.application?.commands.set([]);
 

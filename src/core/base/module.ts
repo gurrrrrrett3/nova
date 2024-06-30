@@ -87,7 +87,7 @@ export default class Module<Config extends {
           this.commands.set(command.getName(), command);
         } catch (e) {
           this.logger.error("CommandLoader", `Error loading command ${commandFile}`);
-          this.logger.error(e);
+          console.error(e);
         }
       })
     );

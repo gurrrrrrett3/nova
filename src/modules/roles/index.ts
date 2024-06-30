@@ -4,6 +4,7 @@ import { AutoRole } from "./entities/autoRole.entity.js";
 import { RolePickerRole } from "./entities/rolePickerRole.entity.js";
 import EmbedUtil from "../util/util/embed.js";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+import i18next, { t } from "i18next";
 
 export default class RolesModule extends Module {
 
@@ -54,15 +55,17 @@ export default class RolesModule extends Module {
                 }
             });
 
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+
             const embed = EmbedUtil.baseEmbed()
-                .setTitle("Role Picker")
+                .setTitle(t("roles:rolePicker.title"))
 
             const memberRoleManager = interaction.guild?.members.cache.get(interaction.user.id)?.roles || await interaction.guild?.members.fetch(interaction.user.id).then((member) => member.roles);
 
             const row = new ActionRowBuilder<StringSelectMenuBuilder>()
             const selectMenu = new StringSelectMenuBuilder()
                 .setCustomId("role_picker_menu")
-                .setPlaceholder("Select a role")
+                .setPlaceholder(t("roles:rolePicker.placeholder"))
                 .setMinValues(0)
                 .setMaxValues(roles.length)
                 .addOptions(roles.map((role) => ({
@@ -121,7 +124,7 @@ export default class RolesModule extends Module {
             );
 
             interaction.followUp({
-                content: "Roles updated.",
+                content: t("roles:rolePicker.success"),
                 ephemeral: true
             });
 
@@ -130,27 +133,23 @@ export default class RolesModule extends Module {
         return true;
     }
 
-    public async sendRolePickerEmbed(channelId: string): Promise<{
-        success: boolean,
-        message?: string
-    }> {
+    public async sendRolePickerEmbed(channelId: string) {
 
         const channel = bot.client.channels.resolve(channelId);
         if (!channel || !channel.isTextBased() || !("guild" in channel)) {
-            return {
-                success: false,
-                message: "Invalid channel"
-            }
+            return
         }
 
+        const t = await i18next.changeLanguage(channel.guild.preferredLocale || "en-US");
+
         const embed = EmbedUtil.baseEmbed(channel.guild)
-            .setDescription("Click the button below to get your roles!")
+            .setDescription(t("roles:rolePicker.embedDescription"))
 
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("role_picker_button")
-                    .setLabel("Get Roles")
+                    .setLabel(t("roles:rolePicker.buttonLabel"))
                     .setStyle(ButtonStyle.Primary)
             )
 
@@ -158,9 +157,5 @@ export default class RolesModule extends Module {
             embeds: [embed],
             components: [row]
         });
-
-        return {
-            success: true
-        }
     }
 }

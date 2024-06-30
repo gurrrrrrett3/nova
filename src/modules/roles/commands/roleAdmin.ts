@@ -5,30 +5,42 @@ import { AutoRole } from "../entities/autoRole.entity.js";
 import EmbedUtil from "../../util/util/embed.js";
 import { RolePickerRole } from "../entities/rolePickerRole.entity.js";
 import RolesModule from "../index.js";
+import LanguageLoader from "../../../core/loaders/languageLoader.js";
+import i18next, { t } from "i18next";
 
 const Command = new SlashCommandBuilder()
   .setName("roleadmin")
+  .setDescription(t("roles:commands.roleadmin.description"))
+  .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.name"))
+  .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.description"))
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
   .setDMPermission(false)
-  .setDescription("Manage role configurations.")
   .addSubcommandGroup((group) =>
     group
       .setName("autoroles")
-      .setDescription("Manage auto assigned roles")
+      .setDescription(t("roles:commands.roleadmin.autoroles.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.description"))
       .addSubcommand((subcommand) =>
         subcommand
           .setName("add")
-          .setDescription("Add a role to auto assign")
+          .setDescription(t("roles:commands.roleadmin.autoroles.add.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
-              .setDescription("The role to auto assign")
+              .setDescription(t("roles:commands.roleadmin.autoroles.add.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.options.role.description"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
             const roleToAdd = interaction.options.getRole("role", true);
             const guildId = interaction.guildId!;
             const roleId = roleToAdd.id;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const autoRoleRepository = db.em.getRepository(AutoRole)
 
@@ -41,7 +53,7 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToAdd.id}> will now be assigned on join.`)
+                EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.autoroles.add.success", { role: `<@&${roleToAdd.id}>` }))
               ]
             });
 
@@ -50,17 +62,23 @@ const Command = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("remove")
-          .setDescription("Remove a role from auto assign")
+          .setDescription(t("roles:commands.roleadmin.autoroles.remove.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
-              .setDescription("The role to remove from auto assign")
+              .setDescription(t("roles:commands.roleadmin.autoroles.remove.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.options.role.description"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
             const roleToRemove = interaction.options.getRole("role", true);
             const guildId = interaction.guildId!;
             const roleId = roleToRemove.id;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const autoRoleRepository = db.em.getRepository(AutoRole)
 
@@ -72,7 +90,7 @@ const Command = new SlashCommandBuilder()
             if (!roleEntity) {
               await interaction.reply({
                 embeds: [
-                  EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToRemove.id}> is not set to be auto assigned.`)
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.autoroles.remove.notFound", { role: roleToRemove.toString() }))
                 ]
               });
               return;
@@ -82,7 +100,7 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToRemove.id}> will no longer be assigned on join.`)
+                EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.autoroles.remove.success", { role: roleToRemove.toString() }))
               ]
             });
           })
@@ -90,9 +108,13 @@ const Command = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("list")
-          .setDescription("List all roles that are auto assigned")
+          .setDescription(t("roles:commands.roleadmin.autoroles.list.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.list.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.list.description"))
           .setFunction(async (interaction) => {
             const guildId = interaction.guildId!;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const autoRoleRepository = db.em.getRepository(AutoRole)
 
@@ -103,7 +125,7 @@ const Command = new SlashCommandBuilder()
             if (roles.length === 0) {
               await interaction.reply({
                 embeds: [
-                  EmbedUtil.baseEmbed(interaction.guild).setDescription("No roles are set to be auto assigned.")
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.autoroles.list.empty"))
                 ]
               });
               return;
@@ -111,9 +133,11 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(
-                  `Roles set to be auto assigned:\n${roles.map((role) => `<@&${role.roleId}>`).join("\n")}`
-                )
+                EmbedUtil.baseEmbed(interaction.guild)
+                  .setTitle(t("roles:commands.roleadmin.autoroles.list.title"))
+                  .setDescription(
+                    roles.map((role) => `<@&${role.roleId}>`).join("\n")
+                  )
               ]
             });
           })
@@ -122,38 +146,52 @@ const Command = new SlashCommandBuilder()
   .addSubcommandGroup((group) =>
     group
       .setName("rolepicker")
-      .setDescription("Manage role picker configurations")
+      .setDescription(t("roles:commands.roleadmin.rolepicker.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.description"))
       .addSubcommand((subcommand) =>
         subcommand
           .setName("add")
-          .setDescription("Add a role to the role picker")
+          .setDescription(t("roles:commands.roleadmin.rolepicker.add.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
-              .setDescription("The role to add to the role picker")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.role.description"))
               .setRequired(true)
           )
           .addStringOption((option) =>
             option
               .setName("name")
-              .setDescription("The name of the role in the role picker")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.name.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.name.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.name.description"))
               .setRequired(true)
           )
           .addStringOption((option) =>
             option
               .setName("description")
-              .setDescription("The description of the role in the role picker")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.description.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.description.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.description.description"))
           )
           .addStringOption((option) =>
             option
               .setName("emoji")
-              .setDescription("The emoji to use for the role in the role picker")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.emoji.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.emoji.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.emoji.description"))
           )
           .setFunction(async (interaction) => {
             const roleToAdd = interaction.options.getRole("role", true);
             const name = interaction.options.getString("name", true);
             const description = interaction.options.getString("description") || "";
             const emoji = interaction.options.getString("emoji") || "";
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const guildId = interaction.guildId!;
             const roleId = roleToAdd.id;
@@ -171,7 +209,7 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToAdd.id}> will now be in the role picker.`)
+                EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.rolepicker.add.success", { role: `<@&${roleToAdd.id}>` }))
               ]
             });
 
@@ -180,17 +218,22 @@ const Command = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("remove")
-          .setDescription("Remove a role from the role picker")
+          .setDescription(t("roles:commands.roleadmin.rolepicker.remove.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.remove.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.remove.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
-              .setDescription("The role to remove from the role picker")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.remove.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.remove.options.role.name"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
             const roleToRemove = interaction.options.getRole("role", true);
             const guildId = interaction.guildId!;
             const roleId = roleToRemove.id;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const roleEntity = await db.em.getRepository(RolePickerRole).findOne({
               roleId,
@@ -200,7 +243,7 @@ const Command = new SlashCommandBuilder()
             if (!roleEntity) {
               await interaction.reply({
                 embeds: [
-                  EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToRemove.id}> is not in the role picker.`)
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:error.notInPicker", { role: roleToRemove.toString() }))
                 ]
               });
               return;
@@ -210,7 +253,7 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToRemove.id}> will no longer be in the role picker.`)
+                EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.rolepicker.remove.success", { role: roleToRemove.toString() }))
               ]
             });
 
@@ -219,9 +262,13 @@ const Command = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("list")
-          .setDescription("List all roles in the role picker")
+          .setDescription(t("roles:commands.roleadmin.rolepicker.list.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.list.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.list.description"))
           .setFunction(async (interaction) => {
             const guildId = interaction.guildId!;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const roles = await db.em.getRepository(RolePickerRole).find({
               guildId
@@ -230,7 +277,7 @@ const Command = new SlashCommandBuilder()
             if (roles.length === 0) {
               await interaction.reply({
                 embeds: [
-                  EmbedUtil.baseEmbed(interaction.guild).setDescription("No roles are in the role picker.")
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.rolepicker.list.empty"))
                 ]
               });
               return;
@@ -238,9 +285,11 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(
-                  `Roles in the role picker:\n${roles.map((role) => `<@&${role.roleId}>`).join("\n")}`
-                )
+                EmbedUtil.baseEmbed(interaction.guild)
+                  .setTitle(t("roles:commands.roleadmin.rolepicker.list.title"))
+                  .setDescription(
+                    roles.map((role) => `<@&${role.roleId}>`).join("\n")
+                  )
               ]
             });
           })
@@ -248,17 +297,23 @@ const Command = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("order")
-          .setDescription("Set the order of roles in the role picker")
+          .setDescription(t("roles:commands.roleadmin.rolepicker.order.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
-              .setDescription("The role to set the order of")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.order.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.role.description"))
               .setRequired(true)
           )
           .addIntegerOption((option) =>
             option
               .setName("order")
-              .setDescription("The order of the role in the role picker")
+              .setDescription(t("roles:commands.roleadmin.rolepicker.order.options.order.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.order.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.order.description"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
@@ -266,6 +321,9 @@ const Command = new SlashCommandBuilder()
             const order = interaction.options.getInteger("order", true);
             const guildId = interaction.guildId!;
             const roleId = roleToOrder.id;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+
             const roleRepo = db.em.getRepository(RolePickerRole);
 
             // change the order of all roles so that the new role can be inserted at the specified order
@@ -278,7 +336,7 @@ const Command = new SlashCommandBuilder()
             if (!role) {
               await interaction.reply({
                 embeds: [
-                  EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToOrder.id}> is not in the role picker.`)
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:error.notInPicker", { role: roleToOrder.toString() }))
                 ]
               });
               return;
@@ -298,7 +356,7 @@ const Command = new SlashCommandBuilder()
             if (!roleEntity) {
               await interaction.reply({
                 embeds: [
-                  EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToOrder.id}> is not in the role picker.`)
+                  EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:error.notInPicker", { role: roleToOrder.toString() }))
                 ]
               });
               return;
@@ -309,7 +367,7 @@ const Command = new SlashCommandBuilder()
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription(`<@&${roleToOrder.id}> is now in position ${order} in the role picker.`)
+                EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.rolepicker.order.success", { role: roleToOrder.toString(), position: order }))
               ]
             });
 
@@ -318,15 +376,19 @@ const Command = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("embed")
-          .setDescription("Send the role picker embed")
+          .setDescription(t("roles:commands.roleadmin.rolepicker.embed.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.embed.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.embed.description"))
           .setFunction(async (interaction) => {
             const channel = interaction.channel!;
+
+            const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             await RolesModule.getRolesModule().sendRolePickerEmbed(channel.id);
 
             await interaction.reply({
               embeds: [
-                EmbedUtil.baseEmbed(interaction.guild).setDescription("Role picker embed sent.")
+                EmbedUtil.baseEmbed(interaction.guild).setDescription(t("roles:commands.roleadmin.rolepicker.embed.success"))
               ],
               ephemeral: true
             });
