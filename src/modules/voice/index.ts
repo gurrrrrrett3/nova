@@ -18,7 +18,7 @@ export default class VoiceModule extends Module {
 
         bot.client.on("voiceStateUpdate", async (oldState, newState) => {
             if (oldState.channelId == newState.channelId) return;
-            if (!newState.channel && oldState.channel && this.voiceChannels.has(oldState.channel.id) && oldState.channel.members.size === 0) {
+            if (oldState.channel && this.voiceChannels.has(oldState.channel.id) && oldState.channel.members.size === 0) {
 
                 // dvc channel is empty
                 this.voiceChannels.delete(oldState.channel.id)
@@ -27,7 +27,7 @@ export default class VoiceModule extends Module {
                 return
             }
 
-            if (!oldState.channel && newState.channel && newState.member) {
+            if (newState.channel && newState.member) {
 
                 const dvcChanenlRepo = db.em.getRepository(DvcChannel)
                 const dvcChannel = await dvcChanenlRepo.findOne({
