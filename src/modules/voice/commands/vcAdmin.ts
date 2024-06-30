@@ -3,24 +3,34 @@ import SlashCommandBuilder from "../../../core/loaders/objects/customSlashComman
 import { db } from "../../../core/index.js";
 import { DvcChannel } from "../entities/dvcChannel.entity.js";
 import EmbedUtil from "../../util/util/embed.js";
+import LanguageLoader from "../../../core/loaders/languageLoader.js";
+import { t } from "i18next";
 
 const Command = new SlashCommandBuilder()
     .setName("vcadmin")
     .setDescription("Manage voice channel settings.")
+    .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.name"))
+    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.description"))
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setDMPermission(false)
     .addSubcommandGroup((group) =>
         group
             .setName("dvc")
             .setDescription("Manage dynamic voice channels.")
+            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.description"))
             .addSubcommand((subcommand) =>
                 subcommand
                     .setName("setlobby")
                     .setDescription("Set the lobby channel for dynamic voice channels.")
+                    .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.name"))
+                    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.description"))
                     .addChannelOption((option) =>
                         option
                             .setName("channel")
                             .setDescription("The channel to set as the lobby.")
+                            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.options.channel.name"))
+                            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.options.channel.description"))
                             .setRequired(true)
                             .addChannelTypes(ChannelType.GuildVoice)
                     )
@@ -46,7 +56,7 @@ const Command = new SlashCommandBuilder()
                         await interaction.reply({
                             embeds: [
                                 EmbedUtil.baseEmbed(interaction.guild)
-                                    .setDescription(`Set lobby channel to <#${channel.id}>`)
+                                    .setDescription(t("voice:commands.vcadmin.dvc.setlobby.success", { channel: channel.toString() }))
                             ],
                         });
                     })

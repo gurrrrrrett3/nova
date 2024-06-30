@@ -5,6 +5,7 @@ import ButtonManager from "./managers/buttonManager.js";
 import SelectMenuManager from "./managers/selectMenuManager.js";
 import ModalManager from "./managers/modalManager.js";
 import { Logger } from "./utils/logger.js";
+import LanguageLoader from "./loaders/languageLoader.js";
 
 export default class Bot {
   public commandLoader: CommandLoader;
@@ -30,6 +31,7 @@ export default class Bot {
       this.moduleLoader.onReady();
     });
 
+    LanguageLoader.loadLanguages();
     this.commandLoader = new CommandLoader(this.client);
     this.moduleLoader = new ModuleLoader(this);
 

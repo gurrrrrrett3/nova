@@ -18,4 +18,8 @@ export default class EmbedUtil {
 
         return embed;
     }
+
+    public static errorEmbed(guild?: Guild | null) {
+        return this.baseEmbed(guild).setColor(Colors.Red);
+    }
 }

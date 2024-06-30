@@ -5,12 +5,14 @@ import Module from "../base/module.js";
 import { CustomCommandBuilder, Manifest } from "./loaderTypes.js";
 import { GatewayIntentsString } from "discord.js";
 import GlobalLogger, { Logger } from "../utils/logger.js";
+import i18next from "i18next";
+import LanguageLoader from "./languageLoader.js";
 
 export default class ModuleLoader {
   public modules: Map<string, Module> = new Map();
   public logger = new Logger("ModuleLoader");
 
-  constructor(private bot: Bot, public location: string = path.resolve("./dist/modules/")) { }
+  constructor(private bot: Bot, public location: string = path.resolve("./dist/modules/"), public srcLocation: string = path.resolve("./src/modules/")) { }
 
   public addModule(module: Module) {
     this.modules.set(module.name, module);
@@ -30,6 +32,26 @@ export default class ModuleLoader {
         const moduleFile = await import(path.resolve(modulePath, "index.js"));
         const m = new moduleFile.default(this.bot) as Module;
         this.addModule(m);
+
+
+        // if there is a language folder, load the language files
+
+        const srcModulePath = path.join(this.srcLocation, mod);
+        const langPath = path.join(srcModulePath, "lang");
+        if (fs.existsSync(langPath)) {
+          const files = fs.readdirSync(langPath);
+
+          for (const file of files) {
+            if (!file.endsWith(".json")) continue;
+            const language = file.replace(".json", "");
+            const resources = JSON.parse(fs.readFileSync(path.resolve(langPath, file)).toString());
+
+            i18next.addResourceBundle(language, m.name, resources);
+
+            LanguageLoader.logger.info(`Loaded language file: ${m.name}/${file}`);
+          }
+        }
+
       })
     )
 

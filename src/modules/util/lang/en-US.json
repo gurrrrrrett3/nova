@@ -1,0 +1,24 @@
+{
+    "error": {
+        "dmChannel": "You can't use this command in DMs."
+    },
+    "commands": {
+        "clear": {
+            "name": "clear",
+            "description": "Clears the chat of the specified amount of messages.",
+            "options": {
+                "amount": {
+                    "name": "amount",
+                    "description": "The amount of messages to clear."
+                },
+                "user": {
+                    "name": "user",
+                    "description": "The user to clear messages from."
+                }
+            },
+            "title": "Messages Cleared",
+            "success": "Successfully cleared {{amount}} messages.",
+            "noMessages": "No messages to clear."
+        }
+    }
+}
