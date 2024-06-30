@@ -48,7 +48,17 @@ const Command = new SlashCommandBuilder()
         }
 
         const name = interaction.options.getString("name", true);
-        await voiceChannel.setName(name);
+        await voiceChannel.setName(name).catch(() => {
+          // failed to rename channel
+          interaction.reply({
+            embeds: [
+              EmbedUtil.baseEmbed(interaction.guild)
+                .setDescription("Failed to rename voice channel.")
+            ],
+            ephemeral: true
+          });
+        });
+
         await interaction.reply({
           embeds: [
             EmbedUtil.baseEmbed(interaction.guild)
@@ -70,6 +80,15 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           Connect: false
+        }).catch(() => {
+          // failed to lock channel
+          interaction.reply({
+            embeds: [
+              EmbedUtil.baseEmbed(interaction.guild)
+                .setDescription("Failed to lock voice channel.")
+            ],
+            ephemeral: true
+          });
         });
 
         await interaction.reply({
@@ -93,7 +112,16 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           Connect: true
-        });
+        }).catch(() => {
+          // failed to unlock channel
+          interaction.reply({
+            embeds: [
+              EmbedUtil.baseEmbed(interaction.guild)
+                .setDescription("Failed to unlock voice channel.")
+            ],
+            ephemeral: true
+          });
+        })
 
         await interaction.reply({
           embeds: [
@@ -116,7 +144,16 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           ViewChannel: false
-        });
+        }).catch(() => {
+          // failed to hide channel
+          interaction.reply({
+            embeds: [
+              EmbedUtil.baseEmbed(interaction.guild)
+                .setDescription("Failed to hide voice channel.")
+            ],
+            ephemeral: true
+          });
+        })
 
         await interaction.reply({
           embeds: [
@@ -139,7 +176,16 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           ViewChannel: true
-        });
+        }).catch(() => {
+          // failed to show channel
+          interaction.reply({
+            embeds: [
+              EmbedUtil.baseEmbed(interaction.guild)
+                .setDescription("Failed to show voice channel.")
+            ],
+            ephemeral: true
+          });
+        })
 
         await interaction.reply({
           embeds: [
@@ -169,7 +215,16 @@ const Command = new SlashCommandBuilder()
         }
 
         const limit = interaction.options.getInteger("limit", true);
-        await voiceChannel.setUserLimit(limit);
+        await voiceChannel.setUserLimit(limit).catch(() => {
+          // failed to set user limit
+          interaction.reply({
+            embeds: [
+              EmbedUtil.baseEmbed(interaction.guild)
+                .setDescription("Failed to set user limit.")
+            ],
+            ephemeral: true
+          });
+        });
 
         await interaction.reply({
           embeds: [
