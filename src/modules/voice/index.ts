@@ -46,9 +46,19 @@ export default class VoiceModule extends Module {
                         name: newState.member!.displayName + "'s Channel",
                         type: ChannelType.GuildVoice,
                         parent: category,
-                    })
+                    }).catch(() => {
+                        // can't create channel
+                        this.logger.error(`Can't create channel.`);
+                    });
 
-                    await newState.member.voice.setChannel(newChannel)
+                    if (!newChannel) {
+                        return;
+                    }
+
+                    await newState.member.voice.setChannel(newChannel).catch(() => {
+                        // can't move member
+                        this.logger.error(`Can't move member to new channel.`);
+                    });
                     this.voiceChannels.add(newChannel.id)
 
                     return;
