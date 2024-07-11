@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey } from "@mikro-orm/core";
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 
 @Entity()
 export class AutoRole {
@@ -6,7 +6,7 @@ export class AutoRole {
     @PrimaryKey()
     roleId!: string;
 
-    @PrimaryKey()
+    @Property()
     guildId!: string;
 
 }

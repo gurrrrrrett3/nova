@@ -1,0 +1,52 @@
+{
+    "commands": {
+        "logadmin": {
+            "name": "logadmin",
+            "description": "Manages settings related to logging various server events.",
+            "channels": {
+                "name": "channels",
+                "description": "Manages where logging events are sent.",
+                "messagelogging": {
+                    "name": "messagelogging",
+                    "description": "Manages where message logs are sent.",
+                    "options": {
+                        "channel": {
+                            "name": "channel",
+                            "description": "The channel to send message logs to."
+                        }
+                    },
+                    "success": "Message logs will now be sent to {{channel}}."
+                },
+                "memberlogging": {
+                    "name": "memberlogging",
+                    "description": "Manages where member logs are sent.",
+                    "options": {
+                        "channel": {
+                            "name": "channel",
+                            "description": "The channel to send member logs to."
+                        }
+                    },
+                    "success": "Member logs will now be sent to {{channel}}."
+                }
+            }
+        }
+    },
+    "events": {
+        "messageUpdate": {
+            "title": "Message Edited",
+            "description": "{{user}} edited a message in {{channel}}."
+        },
+        "messageDelete": {
+            "title": "Message Deleted",
+            "description": "{{user}} deleted a message in {{channel}}."
+        },
+        "guildMemberAdd": {
+            "title": "Member Joined",
+            "description": "{{user}} joined the server.\nAccount created: {{created}}."
+        },
+        "guildMemberRemove": {
+            "title": "Member Left",
+            "description": "{{user}} left the server.\nAccount created: {{created}}.\nJoined: {{joined}}."
+        }
+    }
+}

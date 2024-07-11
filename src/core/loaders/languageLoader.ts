@@ -14,7 +14,10 @@ export default class LanguageLoader {
         i18next.init({
             fallbackLng: "en-US",
             debug: false,
-            resources: {}
+            resources: {},
+            interpolation: {
+                escapeValue: false
+            }
         });
 
         const files = fs.readdirSync(this.langFolder);
