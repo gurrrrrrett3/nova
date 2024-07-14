@@ -18,6 +18,7 @@ export default class LoggingModule extends Module {
     override async onLoad(): Promise<boolean> {
 
         bot.client.on("messageUpdate", async (oldMessage, newMessage) => {
+            if (oldMessage.content === newMessage.content) return;
 
             const t = await i18next.changeLanguage(newMessage.guild?.preferredLocale || "en-US");
 
