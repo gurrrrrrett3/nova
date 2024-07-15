@@ -23,8 +23,6 @@ export default class VoiceModule extends Module {
                 // dvc channel is empty
                 this.voiceChannels.delete(oldState.channel.id)
                 await oldState.channel.delete();
-
-                return
             }
 
             if (newState.channel && newState.member) {
