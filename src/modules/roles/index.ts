@@ -58,14 +58,14 @@ export default class RolesModule extends Module {
             const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
             const embed = EmbedUtil.baseEmbed()
-                .setTitle(t("roles:rolePicker.title"))
+                .setTitle(t("roles:rolepicker.title"))
 
             const memberRoleManager = interaction.guild?.members.cache.get(interaction.user.id)?.roles || await interaction.guild?.members.fetch(interaction.user.id).then((member) => member.roles);
 
             const row = new ActionRowBuilder<StringSelectMenuBuilder>()
             const selectMenu = new StringSelectMenuBuilder()
                 .setCustomId("role_picker_menu")
-                .setPlaceholder(t("roles:rolePicker.placeholder"))
+                .setPlaceholder(t("roles:rolepicker.placeholder"))
                 .setMinValues(0)
                 .setMaxValues(roles.length)
                 .addOptions(roles.map((role) => ({
@@ -124,7 +124,7 @@ export default class RolesModule extends Module {
             );
 
             interaction.followUp({
-                content: t("roles:rolePicker.success"),
+                content: t("roles:rolepicker.success"),
                 ephemeral: true
             });
 
@@ -143,13 +143,13 @@ export default class RolesModule extends Module {
         const t = await i18next.changeLanguage(channel.guild.preferredLocale || "en-US");
 
         const embed = EmbedUtil.baseEmbed(channel.guild)
-            .setDescription(t("roles:rolePicker.embedDescription"))
+            .setDescription(t("roles:rolepicker.buttonPrompt"))
 
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("role_picker_button")
-                    .setLabel(t("roles:rolePicker.buttonLabel"))
+                    .setLabel(t("roles:rolepicker.buttonLabel"))
                     .setStyle(ButtonStyle.Primary)
             )
 
