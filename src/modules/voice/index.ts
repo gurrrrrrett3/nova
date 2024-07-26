@@ -1,7 +1,8 @@
 import { bot, db } from "../../core/index.js";
 import Module from "../../core/base/module.js";
-import { DvcChannel } from "./entities/dvcChannel.entity.js";
+import { DvcLobby } from "./entities/dvcLobby.entity.js";
 import { ChannelType } from "discord.js";
+import { Dvc } from "./entities/dvc.entity.js";
 
 export default class VoiceModule extends Module {
 
@@ -12,9 +13,35 @@ export default class VoiceModule extends Module {
         });
     }
 
-    public voiceChannels: Set<string> = new Set();
+    public voiceChannels: Map<string, Dvc> = new Map();
 
     override async onLoad(): Promise<boolean> {
+
+        const dvcRepo = db.em.getRepository(Dvc)
+        const dvcLobbyRepo = db.em.getRepository(DvcLobby)
+
+        const dvcs = await dvcRepo.findAll()
+
+        await Promise.all(dvcs.map(async (dvc) => {
+            const channel = await bot.client.channels.fetch(dvc.channelId)
+            if (channel && channel.type == ChannelType.GuildVoice) {
+                if (channel.members.size === 0) {
+                    await channel.delete()
+
+                    db.em.remove(dvc)
+                    return;
+                }
+
+                this.voiceChannels.set(
+                    channel.id,
+                    dvcRepo.create({
+                        channelId: channel.id
+                    }))
+            }
+        }))
+
+        db.em.flush()
+        this.logger.info(`Loaded ${this.voiceChannels.size} voice channels.`)
 
         bot.client.on("voiceStateUpdate", async (oldState, newState) => {
             if (oldState.channelId == newState.channelId) return;
@@ -22,13 +49,17 @@ export default class VoiceModule extends Module {
 
                 // dvc channel is empty
                 this.voiceChannels.delete(oldState.channel.id)
-                await oldState.channel.delete();
+
+                await Promise.all([
+                    db.em.removeAndFlush(this.voiceChannels.get(oldState.channel.id)!),
+                    oldState.channel.delete()
+                ])
+
             }
 
             if (newState.channel && newState.member) {
 
-                const dvcChanenlRepo = db.em.getRepository(DvcChannel)
-                const dvcChannel = await dvcChanenlRepo.findOne({
+                const dvcChannel = await dvcLobbyRepo.findOne({
                     channelId: newState.channel.id
                 })
 
@@ -57,7 +88,13 @@ export default class VoiceModule extends Module {
                         // can't move member
                         this.logger.error(`Can't move member to new channel.`);
                     });
-                    this.voiceChannels.add(newChannel.id)
+
+                    const dvc = dvcRepo.create({
+                        channelId: newChannel.id
+                    })
+
+                    this.voiceChannels.set(newChannel.id, dvc)
+                    await db.em.persistAndFlush(dvc)
 
                     return;
                 }

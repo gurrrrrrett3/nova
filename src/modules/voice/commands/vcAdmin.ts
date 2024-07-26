@@ -1,7 +1,7 @@
 import { ChannelType, PermissionFlagsBits } from "discord.js";
 import SlashCommandBuilder from "../../../core/loaders/objects/customSlashCommandBuilder.js";
 import { db } from "../../../core/index.js";
-import { DvcChannel } from "../entities/dvcChannel.entity.js";
+import { DvcLobby } from "../entities/dvcLobby.entity.js";
 import EmbedUtil from "../../util/util/embed.js";
 import LanguageLoader from "../../../core/loaders/languageLoader.js";
 import { t } from "i18next";
@@ -36,7 +36,7 @@ const Command = new SlashCommandBuilder()
                     )
                     .setFunction(async (interaction) => {
                         const channel = interaction.options.getChannel("channel", true);
-                        const dvcChannelRepo = db.em.getRepository(DvcChannel);
+                        const dvcChannelRepo = db.em.getRepository(DvcLobby);
 
                         let dvcChannel = await dvcChannelRepo.findOne({
                             guildId: interaction.guildId
