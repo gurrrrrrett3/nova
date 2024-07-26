@@ -4,10 +4,8 @@ import Core, { bot } from "../index.js";
 import { Logger } from "../utils/logger.js";
 import { CustomCommandBuilder } from "./loaderTypes.js";
 import { exec } from "child_process";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 import { resolve } from "path";
-import { createHash } from "crypto";
-import Utils from "../utils/utils.js";
 export default class CommandLoader {
 
   public client: Client;
@@ -78,46 +76,43 @@ export default class CommandLoader {
     //Check if the command cache has changed
     if (!Core.config.get("deployCommands")) {
       this.logger.log("Skipping command deployment, set deployCommands to true in your config to deploy commands");
-      return;
-    }
-
-    Core.config.get("showCommandDeploymentInfo") && this.logger.log(`Deploying ${commands.length} command${commands.length == 1 ? "" : "s"}`)
-
-    const rest = new REST({ version: "10" }).setToken(
-      (this.client.token as string) ?? (process.env.TOKEN as string)
-    );
-
-    writeFileSync(resolve("./dist/commands.json"), JSON.stringify(commandsToDeploy, null, 2));
-
-    this.client.application?.commands.set([]);
-
-    //Push to Discord
-    if (Core.config.get("commandRegisterMode") == "guild") {
-      rest
-        .put(Routes.applicationGuildCommands(applicationId, Core.config.get("guildId")), {
-          body: commandsToDeploy,
-        })
-        .then(() => {
-          Core.config.get("showCommandDeploymentInfo") ? this.logger.log(`${this.commands.size} command${this.commands.size == 1 ? "" : "s"} deployed`) : null;
-        })
-        .catch((err) => {
-          this.logger.error(err);
-        });
     } else {
-      rest
-        .put(Routes.applicationCommands(applicationId), {
-          body: commandsToDeploy,
-        })
-        .then(() => {
-          Core.config.get("showCommandDeploymentInfo") ? this.logger.log(`${this.commands.size} command${this.commands.size == 1 ? "" : "s"} deployed`) : null;
-        })
-        .catch((err) => {
-          this.logger.log(err);
-        });
-    }
+      Core.config.get("showCommandDeploymentInfo") && this.logger.log(`Deploying ${commands.length} command${commands.length == 1 ? "" : "s"}`)
 
-    this.showLoadedCommandCount();
-    Core.config.set("deployCommands", false);
+      const rest = new REST({ version: "10" }).setToken(
+        (this.client.token as string) ?? (process.env.TOKEN as string)
+      );
+
+      writeFileSync(resolve("./dist/commands.json"), JSON.stringify(commandsToDeploy, null, 2));
+
+      //Push to Discord
+      if (Core.config.get("commandRegisterMode") == "guild") {
+        rest
+          .put(Routes.applicationGuildCommands(applicationId, Core.config.get("guildId")), {
+            body: commandsToDeploy,
+          })
+          .then(() => {
+            Core.config.get("showCommandDeploymentInfo") ? this.logger.log(`${this.commands.size} command${this.commands.size == 1 ? "" : "s"} deployed`) : null;
+          })
+          .catch((err) => {
+            this.logger.error(err);
+          });
+      } else {
+        rest
+          .put(Routes.applicationCommands(applicationId), {
+            body: commandsToDeploy,
+          })
+          .then(() => {
+            Core.config.get("showCommandDeploymentInfo") ? this.logger.log(`${this.commands.size} command${this.commands.size == 1 ? "" : "s"} deployed`) : null;
+          })
+          .catch((err) => {
+            this.logger.log(err);
+          });
+      }
+
+      this.showLoadedCommandCount();
+      Core.config.set("deployCommands", false);
+    }
 
     //Handle running commands, and direct them to the correct handler function
     this.client.on("interactionCreate", (interaction) => {
@@ -131,7 +126,7 @@ export default class CommandLoader {
       if (interaction.replied) return; // Ignore interactions that have already been replied to
 
       const command = this.commands.get(interaction.commandName);
-      if (!command) return;
+      if (!command) return interaction.reply("An error occurred while trying to run this command.");
 
       if (interaction.isChatInputCommand() && command.isChatInputCommandHandler())
         return command.run(interaction);

@@ -6,7 +6,7 @@ export default class SelectMenuManager {
 
   constructor(private client: Client) {
     this.client.on("interactionCreate", (menu) => {
-      if (!menu.isSelectMenu()) return;
+      if (!menu.isStringSelectMenu()) return;
 
       const menuId = menu.customId;
       const menuFunc = this.menus.get(menuId);
