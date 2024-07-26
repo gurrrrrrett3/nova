@@ -33,6 +33,14 @@
                 "reason": {
                     "name": "reason",
                     "description": "The reason for locking the channel."
+                },
+                "showmessage": {
+                    "name": "showmessage",
+                    "description": "Whether to show a message when the channel is locked."
+                },
+                "hide": {
+                    "name": "hide",
+                    "description": "Whether to hide the channel when it is locked."
                 }
             },
             "lock": {

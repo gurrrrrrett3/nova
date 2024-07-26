@@ -59,7 +59,8 @@ const Command = new SlashCommandBuilder()
                     EmbedUtil.errorEmbed()
                         .setTitle(t("util:commands.clear.title"))
                         .setDescription(t("util:commands.clear.noMessages"))
-            ]
+            ],
+            ephemeral: true
         })
     });
 
