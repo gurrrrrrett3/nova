@@ -11,6 +11,7 @@ export interface CoreConfig {
   guildId: string;
   showCommandDeploymentInfo: boolean;
   showCommandCount: boolean;
+  deployCommands: boolean;
   showModuleLoadInfo: boolean;
   showInteractionHasExpired: boolean;
 }
@@ -28,6 +29,7 @@ export default class Core {
       guildId: "",
       showCommandDeploymentInfo: true,
       showCommandCount: true,
+      deployCommands: true,
       showModuleLoadInfo: true,
       showInteractionHasExpired: true,
     })
