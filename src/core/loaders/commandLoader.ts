@@ -78,6 +78,8 @@ export default class CommandLoader {
     //Check if the command cache has changed
     if (!Core.config.get("deployCommands")) {
       this.logger.log("Skipping command deployment, set deployCommands to true in your config to deploy commands");
+      this.showLoadedCommandCount();
+      return;
     }
 
     Core.config.get("showCommandDeploymentInfo") && this.logger.log(`Deploying ${commands.length} command${commands.length == 1 ? "" : "s"}`)

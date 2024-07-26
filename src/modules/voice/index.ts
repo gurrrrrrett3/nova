@@ -13,8 +13,6 @@ export default class VoiceModule extends Module {
         });
     }
 
-    public voiceChannels: Map<string, Dvc> = new Map();
-
     override async onLoad(): Promise<boolean> {
 
         const dvcRepo = db.em.getRepository(Dvc)
@@ -23,7 +21,8 @@ export default class VoiceModule extends Module {
         const dvcs = await dvcRepo.findAll()
 
         await Promise.all(dvcs.map(async (dvc) => {
-            const channel = await bot.client.channels.fetch(dvc.channelId)
+            const channel = await bot.client.channels.fetch(dvc.channelId).catch(() => null)
+
             if (channel && channel.type == ChannelType.GuildVoice) {
                 if (channel.members.size === 0) {
                     await channel.delete()
@@ -31,27 +30,22 @@ export default class VoiceModule extends Module {
                     db.em.remove(dvc)
                     return;
                 }
-
-                this.voiceChannels.set(
-                    channel.id,
-                    dvcRepo.create({
-                        channelId: channel.id
-                    }))
             }
         }))
 
-        db.em.flush()
-        this.logger.info(`Loaded ${this.voiceChannels.size} voice channels.`)
-
         bot.client.on("voiceStateUpdate", async (oldState, newState) => {
             if (oldState.channelId == newState.channelId) return;
-            if (oldState.channel && this.voiceChannels.has(oldState.channel.id) && oldState.channel.members.size === 0) {
+
+            const dvc = await dvcRepo.findOne({
+                channelId: oldState.channelId
+            })
+
+            if (oldState.channel && dvc && oldState.channel.members.size === 0) {
 
                 // dvc channel is empty
-                this.voiceChannels.delete(oldState.channel.id)
 
                 await Promise.all([
-                    db.em.removeAndFlush(this.voiceChannels.get(oldState.channel.id)!),
+                    db.em.removeAndFlush(dvc),
                     oldState.channel.delete()
                 ])
 
@@ -93,7 +87,6 @@ export default class VoiceModule extends Module {
                         channelId: newChannel.id
                     })
 
-                    this.voiceChannels.set(newChannel.id, dvc)
                     await db.em.persistAndFlush(dvc)
 
                     return;

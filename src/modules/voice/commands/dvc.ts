@@ -4,6 +4,8 @@ import VoiceModule from "../index.js";
 import EmbedUtil from "../../util/util/embed.js";
 import i18next, { t } from "i18next";
 import LanguageLoader from "../../../core/loaders/languageLoader.js";
+import { db } from "../../../core/index.js";
+import { Dvc } from "../entities/dvc.entity.js";
 
 async function getVoiceChannel(interaction: ChatInputCommandInteraction) {
 
@@ -25,7 +27,9 @@ async function getVoiceChannel(interaction: ChatInputCommandInteraction) {
     return null;
   }
 
-  if (!VoiceModule.getVoiceModule().voiceChannels.has(voiceChannel.id)) {
+  const dvcRepo = db.em.getRepository(Dvc);
+
+  if (!await dvcRepo.findOne({ channelId: voiceChannel.id })) {
     await interaction.reply(t("voice:errors.notDynamicChannel"));
     return null;
   }
