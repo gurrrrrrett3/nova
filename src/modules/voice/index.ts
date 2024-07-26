@@ -3,6 +3,8 @@ import Module from "../../core/base/module.js";
 import { DvcLobby } from "./entities/dvcLobby.entity.js";
 import { ChannelType } from "discord.js";
 import { Dvc } from "./entities/dvc.entity.js";
+import EmbedUtil from "../util/util/embed.js";
+import i18next, { t } from "i18next";
 
 export default class VoiceModule extends Module {
 
@@ -35,6 +37,7 @@ export default class VoiceModule extends Module {
 
         bot.client.on("voiceStateUpdate", async (oldState, newState) => {
             if (oldState.channelId == newState.channelId) return;
+            const t = await i18next.changeLanguage(newState.guild?.preferredLocale || "en-US");
 
             const dvc = await dvcRepo.findOne({
                 channelId: oldState.channelId
@@ -83,6 +86,18 @@ export default class VoiceModule extends Module {
                         this.logger.error(`Can't move member to new channel.`);
                     });
 
+                    await newChannel.send({
+                        embeds: [
+                            EmbedUtil.baseEmbed(newState.guild)
+                                .setTitle(t("voice:messages.created.title"))
+                                .setDescription(t("voice:messages.created.description"))
+
+                        ]
+                    }).catch(() => {
+                        // can't send message
+                        this.logger.error(`Can't send message.`);
+                    })
+
                     const dvc = dvcRepo.create({
                         channelId: newChannel.id
                     })
@@ -92,7 +107,6 @@ export default class VoiceModule extends Module {
                     return;
                 }
             }
-
         })
 
         return true;

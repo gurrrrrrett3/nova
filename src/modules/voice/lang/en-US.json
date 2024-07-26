@@ -87,5 +87,11 @@
                 }
             }
         }
+    },
+    "messages": {
+        "created": {
+            "title": "Welcome to your channel!",
+            "description": "Check out the `/dvc` command to customize it!\n`/dvc rename` is a good place to start."
+        }
     }
 }
