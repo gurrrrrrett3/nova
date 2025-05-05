@@ -2,7 +2,12 @@
     "error": {
         "dmChannel": "You can't use this command in DMs.",
         "noChannel": "That channel doesn't exist.",
-        "notTextChannel": "This command can only be used on text channels."
+        "notTextChannel": "This command can only be used on text channels.",
+        "notVoiceChannel": "This command can only be used on voice channels.",
+        "noMembers": "There are no members in this channel.",
+        "sameChannels": "You can't move members to the same channel.",
+        "toManyMembers": "You can't move more than 100 members at a time.",
+        "tooManyMembersInChannel": "{{channel}}'s member limit is {{limit}} members, but there are {{members}} members to move."
     },
     "commands": {
         "clear": {
@@ -54,6 +59,51 @@
                 "failed": "Failed to unlock {{channel}}."
             },
             "defaultReason": "No reason provided."
+        },
+        "migrate": {
+            "name": "migrate",
+            "description": "Move all members from one channel to another.",
+            "options": {
+                "from": {
+                    "name": "from",
+                    "description": "The channel to move members from."
+                },
+                "to": {
+                    "name": "to",
+                    "description": "The channel to move members to."
+                },
+                "reason": {
+                    "name": "reason",
+                    "description": "The reason for moving members."
+                },
+                "permissions": {
+                    "name": "permissions",
+                    "description": "Respect channel permissions. (if a user can't connect to the channel, they won't be moved)"
+                },
+                "silent": {
+                    "name": "silent",
+                    "description": "Don't dm the user when the command is executed."
+                }
+            },
+            "migrating": {
+                "title": "Migrating Members...",
+                "description": "Moving members from {{from}} to {{to}}..."
+            },
+            "dm": {
+                "title": "You have been moved!",
+                "description": "You have been moved from {{from}} to {{to}} by {{user}}.",
+                "reason": "Reason"
+            },
+            "defaultReason": "No reason provided.",
+            "success": {
+                "title": "Members Moved",
+                "description": "{{moved}} members have been moved from {{from}} to {{to}}."
+            },
+            "failed": {
+                "title": "Failed to Move Members",
+                "description": "Failed to move {{moved}} members from {{from}} to {{to}}.",
+                "members": "Members failed to move"
+            }
         }
     }
 }

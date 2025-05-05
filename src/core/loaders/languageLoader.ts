@@ -5,7 +5,6 @@ import { Logger } from '../utils/logger.js';
 
 export default class LanguageLoader {
 
-    public static langFolder: string = path.resolve("./src/lang/")
     public static langs: Map<string, any> = new Map();
     public static logger = new Logger("Language");
 
@@ -19,21 +18,6 @@ export default class LanguageLoader {
                 escapeValue: false
             }
         });
-
-        const files = fs.readdirSync(this.langFolder);
-
-        for (const file of files) {
-            if (!file.endsWith(".json")) continue;
-            const language = file.replace(".json", "");
-            const resources = JSON.parse(fs.readFileSync(path.resolve(this.langFolder, file)).toString());
-
-            const namespaces = Object.keys(resources);
-            for (const namespace of namespaces) {
-                i18next.addResourceBundle(language, namespace, resources[namespace]);
-            }
-
-            this.logger.info(`Loaded language file: ${file}`);
-        }
     }
 
     public static getKeyLocalications(key: string): any { // Map<string, string> as any to avoid type errors
