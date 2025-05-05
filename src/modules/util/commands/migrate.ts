@@ -89,7 +89,7 @@ const Command = new SlashCommandBuilder()
                 if (permissions) {
                     const permissions = toChannel.permissionsFor(member);
                     if (!permissions.has(PermissionFlagsBits.Connect)) {
-                        failedToMoveList.push(member.user.username);
+                        failedToMoveList.push(member.user.toString());
                         return;
                     }
                 }
@@ -97,7 +97,7 @@ const Command = new SlashCommandBuilder()
                 await member.voice.setChannel(toChannel,
                     `Migrate: ${reason}` || t("util:commands.migrate.defaultReason", { from: fromChannel.toString(), to: toChannel.toString() }))
                     .catch(() => {
-                        failedToMoveList.push(member.user.username);
+                        failedToMoveList.push(member.user.toString());
                     })
                     .then(async () => {
                         if (silent) return;
@@ -119,7 +119,7 @@ const Command = new SlashCommandBuilder()
                                 // do nothing
                             });
                     }).finally(() => {
-                        movedList.push(member.user.username);
+                        movedList.push(member.user.toString());
                     })
             })
         )
@@ -132,7 +132,7 @@ const Command = new SlashCommandBuilder()
                         .setDescription(t("util:commands.migrate.failed.description", { from: fromChannel.name, to: toChannel.name, amount: failedToMoveList.length }))
                         .addFields({
                             name: t("util:commands.migrate.failed.members"),
-                            value: failedToMoveList.join(", ") || ""
+                            value: failedToMoveList.join(", ") || t("util:commands.migrate.success.noMembers")
                         })
                         .setColor(Colors.Red)
                 ]
@@ -143,6 +143,10 @@ const Command = new SlashCommandBuilder()
                     EmbedUtil.baseEmbed(interaction.guild)
                         .setTitle(t("util:commands.migrate.success.title"))
                         .setDescription(t("util:commands.migrate.success.description", { from: fromChannel.name, to: toChannel.name, moved: movedList.length }))
+                        .addFields({
+                            name: t("util:commands.migrate.success.members"),
+                            value: movedList.join(", ") || t("util:commands.migrate.success.noMembers")
+                        })
                         .setColor(Colors.Green)
                 ]
             });

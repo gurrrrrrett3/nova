@@ -7,6 +7,7 @@ import { GatewayIntentsString } from "discord.js";
 import GlobalLogger, { Logger } from "../utils/logger.js";
 import i18next from "i18next";
 import LanguageLoader from "./languageLoader.js";
+import Utils from "../utils/utils.js";
 
 export default class ModuleLoader {
   public modules: Map<string, Module> = new Map();
@@ -25,6 +26,7 @@ export default class ModuleLoader {
   public async loadModules() {
     const modules = fs.readdirSync(this.location);
 
+    let languageKeyCount = 0;
 
     await Promise.all(
       modules.map(async (mod) => {
@@ -45,6 +47,7 @@ export default class ModuleLoader {
             if (!file.endsWith(".json")) continue;
             const language = file.replace(".json", "");
             const resources = JSON.parse(fs.readFileSync(path.resolve(langPath, file)).toString());
+            languageKeyCount += Utils.recursiveLeafCount(resources);
 
             i18next.addResourceBundle(language, m.name, resources);
 
@@ -57,6 +60,7 @@ export default class ModuleLoader {
 
 
     this.logger.log("Loaded modules: " + this.modules.size);
+    this.logger.log("Loaded language strings: " + languageKeyCount);
 
     this.bot.loadStatus.modules = true;
 

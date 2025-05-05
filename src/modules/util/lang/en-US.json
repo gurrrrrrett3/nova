@@ -97,12 +97,15 @@
             "defaultReason": "No reason provided.",
             "success": {
                 "title": "Members Moved",
-                "description": "{{moved}} members have been moved from {{from}} to {{to}}."
+                "description": "{{moved}} members have been moved from {{from}} to {{to}}.",
+                "members": "Members moved",
+                "none": "No members were moved."
             },
             "failed": {
                 "title": "Failed to Move Members",
                 "description": "Failed to move {{moved}} members from {{from}} to {{to}}.",
-                "members": "Members failed to move"
+                "members": "Members failed to move",
+                "none": "No members were moved."
             }
         }
     }

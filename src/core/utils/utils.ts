@@ -45,4 +45,16 @@ export default class Utils {
     return true;
   }
 
+  public static recursiveLeafCount<T>(obj: T): number {
+    let count = 0;
+    for (const key in obj) {
+      if (typeof obj[key] === "object") {
+        count += this.recursiveLeafCount(obj[key]);
+      } else {
+        count++;
+      }
+    }
+    return count;
+  }
+
 }
