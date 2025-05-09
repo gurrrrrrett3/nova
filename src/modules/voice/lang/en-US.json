@@ -85,6 +85,15 @@
                     },
                     "success": "The lobby voice channel has been set to {{channel}}."
                 }
+            },
+            "autoafk": {
+                "name": "autoafk",
+                "description": "Automatically move users to the guild AFK channel under conditions.",
+                "ondeafen": {
+                    "name": "ondeafen",
+                    "description": "Move users to the guild AFK channel when they are deafened.",
+                    "success": "AutoAFK on deafen has been {{enabled}}."
+                }
             }
         }
     },

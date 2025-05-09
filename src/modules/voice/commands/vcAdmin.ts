@@ -5,6 +5,7 @@ import { DvcLobby } from "../entities/dvcLobby.entity.js";
 import EmbedUtil from "../../util/util/embed.js";
 import LanguageLoader from "../../../core/loaders/languageLoader.js";
 import { t } from "i18next";
+import { GuildConfig } from "../../core/entities/demoEntity.js";
 
 const Command = new SlashCommandBuilder()
     .setName("vcadmin")
@@ -57,6 +58,53 @@ const Command = new SlashCommandBuilder()
                             embeds: [
                                 EmbedUtil.baseEmbed(interaction.guild)
                                     .setDescription(t("voice:commands.vcadmin.dvc.setlobby.success", { channel: channel.toString() }))
+                            ],
+                        });
+                    })
+            )
+    )
+    .addSubcommandGroup((group) =>
+        group
+            .setName("autoafk")
+            .setDescription(t("voice:commands.vcadmin.autoafk.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.description"))
+            .addSubcommand((subcommand) =>
+                subcommand
+                    .setName("ondeafen")
+                    .setDescription(t("voice:commands.vcadmin.autoafk.ondeafen.description"))
+                    .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.name"))
+                    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.description"))
+                    .addBooleanOption((option) =>
+                        option
+                            .setName("enabled")
+                            .setDescription(t("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.description"))
+                            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.name"))
+                            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.description"))
+                            .setRequired(true)
+                    )
+                    .setFunction(async (interaction) => {
+                        const enabled = interaction.options.getBoolean("enabled", true);
+                        const guildConfigRepo = db.em.getRepository(GuildConfig);
+                        let guildConfig = await guildConfigRepo.findOne({
+                            guildId: interaction.guildId,
+                            key: "autoafk.ondeafen"
+                        });
+                        if (!guildConfig) {
+                            guildConfig = guildConfigRepo.create({
+                                guildId: interaction.guildId!,
+                                key: "autoafk.ondeafen",
+                                value: enabled.toString()
+                            });
+                        }
+                        else {
+                            guildConfig.value = enabled.toString();
+                        }
+                        await db.em.persistAndFlush(guildConfig);
+                        await interaction.reply({
+                            embeds: [
+                                EmbedUtil.baseEmbed(interaction.guild)
+                                    .setDescription(t("voice:commands.vcadmin.autoafk.ondeafen.success", { enabled: enabled ? t("core:enabled") : t("core:disabled") }))
                             ],
                         });
                     })
