@@ -112,7 +112,7 @@ export default class VoiceModule extends Module {
                 }),
                 new Promise(async (resolve) => {
                     if (!newState.channel) return;
-                    if (oldState.deaf == newState.deaf && oldState.selfDeaf == newState.selfDeaf) return;
+                    // if (oldState.deaf == newState.deaf && oldState.selfDeaf == newState.selfDeaf) return;
                     const guildConfigRepo = db.em.getRepository(GuildConfig);
                     const autoAfkOnDeafen = await guildConfigRepo.findOne({
                         guildId: newState.guild.id,
