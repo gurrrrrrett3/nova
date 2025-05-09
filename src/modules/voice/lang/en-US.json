@@ -92,15 +92,20 @@
                 "ondeafen": {
                     "name": "ondeafen",
                     "description": "Move users to the guild AFK channel when they are deafened.",
-                    "success": "AutoAFK on deafen has been {{enabled}}."
+                    "success": "AutoAFK on deafen has been {{enabled}}.",
+                    "options": {
+                        "enabled": {
+                            "name": "enabled",
+                            "description": "Whether to enable or disable autoAFK on deafen."
+                        }
+                    }
                 }
             }
-        }
-    },
-    "messages": {
-        "created": {
-            "title": "Welcome to your channel!",
-            "description": "Check out the `/dvc` command to customize it!\n`/dvc rename` is a good place to start."
+        },
+        "messages": {
+            "created": {
+                "title": "Welcome to your channel!",
+                "description": "Check out the `/dvc` command to customize it!\n`/dvc rename` is a good place to start."
+            }
         }
     }
-}
