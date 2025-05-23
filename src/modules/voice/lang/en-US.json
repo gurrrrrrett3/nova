@@ -43,6 +43,66 @@
                 "success": "Your voice channel has been shown.",
                 "failed": "Failed to show voice channel."
             },
+            "add": {
+                "name": "add",
+                "description": "Add a user or role to your voice channel.",
+                "options": {
+                    "user": {
+                        "name": "user",
+                        "description": "The user to add to your voice channel."
+                    },
+                    "role": {
+                        "name": "role",
+                        "description": "The role to add to your voice channel."
+                    }
+                },
+                "success": "{{user}} has been added to your voice channel.",
+                "failed": "Failed to add user to voice channel."
+            },
+            "deny": {
+                "name": "deny",
+                "description": "Deny a user or role from your voice channel.",
+                "options": {
+                    "user": {
+                        "name": "user",
+                        "description": "The user to deny from your voice channel."
+                    },
+                    "role": {
+                        "name": "role",
+                        "description": "The role to deny from your voice channel."
+                    }
+                },
+                "success": "{{user}} has been denied from your voice channel.",
+                "failed": "Failed to deny user from voice channel."
+            },
+            "remove": {
+                "name": "remove",
+                "description": "Remove a user or role from your voice channel.",
+                "options": {
+                    "user": {
+                        "name": "user",
+                        "description": "The user to remove from your voice channel."
+                    },
+                    "role": {
+                        "name": "role",
+                        "description": "The role to remove from your voice channel."
+                    }
+                },
+                "success": "{{user}} has been removed from your voice channel.",
+                "failed": "Failed to remove user from voice channel."
+            },
+            "freeze": {
+                "name": "freeze",
+                "description": "Allow current users to rejoin your locked channel even if they leave.",
+                "success": "Your voice channel has been frozen.",
+                "failed": "Failed to freeze voice channel."
+            },
+            "clear": {
+                "name": "clear",
+                "description": "Clear any manually set permissions for your voice channel.",
+                "success": "Your voice channel has been cleared.",
+                "failed": "Failed to clear voice channel."
+            },
             "limit": {
                 "name": "limit",
                 "description": "Set the user limit for your voice channel.",
@@ -66,6 +126,16 @@
                 },
                 "success": "Channel bitrate has been set to {{bitrate}}.",
                 "failed": "Channel bitrate."
+            },
+            "info": {
+                "name": "info",
+                "description": "Get information about your voice channel.",
+                "fields": {
+                    "locked": "Locked",
+                    "hidden": "Hidden",
+                    "userLimit": "User Limit",
+                    "bitrate": "Bitrate"
+                }
             }
         },
         "vcadmin": {

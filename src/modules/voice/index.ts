@@ -72,7 +72,7 @@ export default class VoiceModule extends Module {
                             }
 
                             const newChannel = await newState.guild.channels.create({
-                                name: newState.member!.displayName + "'s Channel",
+                                name: newState.member!.displayName.endsWith("s") ? newState.member!.displayName + "' channel" : newState.member!.displayName + "'s channel",
                                 type: ChannelType.GuildVoice,
                                 parent: category,
                             }).catch(() => {
