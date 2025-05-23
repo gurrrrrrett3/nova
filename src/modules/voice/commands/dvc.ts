@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, OverwriteType } from "discord.js";
 import SlashCommandBuilder from "../../../core/loaders/objects/customSlashCommandBuilder.js";
 import VoiceModule from "../index.js";
 import EmbedUtil from "../../util/util/embed.js";
@@ -614,9 +614,15 @@ const Command = new SlashCommandBuilder()
         await interaction.reply({
           embeds: [
             EmbedUtil.baseEmbed(interaction.guild)
+              .setTitle(voiceChannel.name)
               .setDescription(`\`\`\`diff${voiceChannel.permissionOverwrites.valueOf().map((v, k) => {
-                return `${k}\n${v.allow.toArray().map((a) => `+ ${a}`).join("\n")}\n${v.deny.toArray().map((d) => `- ${d}`).join("\n")}`;
-              })}\`\`\``)
+                return [
+                  v.type == OverwriteType.Member ? `<@${k}>` : `<@&${k}>`,
+                  v.allow.toArray().map((a) => `+ ${a}`).join("\n"),
+                  v.deny.toArray().map((d) => `- ${d}`).join("\n")
+                ].join("\n")
+              }).join('\n')
+                }\`\`\``)
               .setFields([
                 {
                   name: t("voice:commands.dvc.info.fields.locked"),
