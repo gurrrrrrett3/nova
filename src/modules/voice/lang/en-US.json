@@ -56,7 +56,7 @@
                         "description": "The role to add to your voice channel."
                     }
                 },
-                "success": "{{user}} has been added to your voice channel.",
+                "success": "{{added}} has been added to your voice channel.",
                 "failed": "Failed to add user to voice channel."
             },
             "deny": {
@@ -72,7 +72,7 @@
                         "description": "The role to deny from your voice channel."
                     }
                 },
-                "success": "{{user}} has been denied from your voice channel.",
+                "success": "{{denied}} has been denied from your voice channel.",
                 "failed": "Failed to deny user from voice channel."
             },
             "remove": {
@@ -88,7 +88,7 @@
                         "description": "The role to remove from your voice channel."
                     }
                 },
-                "success": "{{user}} has been removed from your voice channel.",
+                "success": "{{removed}} has been removed from your voice channel.",
                 "failed": "Failed to remove user from voice channel."
             },
             "freeze": {

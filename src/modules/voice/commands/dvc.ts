@@ -65,7 +65,7 @@ const Command = new SlashCommandBuilder()
         const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
         const name = interaction.options.getString("name", true);
-        await voiceChannel.setName(name).catch(() => {
+        await voiceChannel.setName(name, `@${interaction.user.username}: /dvc rename ${name}`).catch(() => {
           // failed to rename channel
           interaction.reply({
             embeds: [
@@ -101,6 +101,9 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           Connect: false
+        }, {
+          reason: `@${interaction.user.username}: /dvc lock`,
+          type: OverwriteType.Role
         }).catch(() => {
           // failed to lock channel
           interaction.reply({
@@ -110,7 +113,7 @@ const Command = new SlashCommandBuilder()
             ],
             ephemeral: true
           });
-        });
+        })
 
         await interaction.reply({
           embeds: [
@@ -137,6 +140,9 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           Connect: true
+        }, {
+          reason: `@${interaction.user.username}: /dvc unlock`,
+          type: OverwriteType.Role
         }).catch(() => {
           // failed to unlock channel
           interaction.reply({
@@ -173,6 +179,9 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           ViewChannel: false
+        }, {
+          reason: `@${interaction.user.username}: /dvc hide`,
+          type: OverwriteType.Role
         }).catch(() => {
           // failed to hide channel
           interaction.reply({
@@ -209,6 +218,9 @@ const Command = new SlashCommandBuilder()
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           ViewChannel: true
+        }, {
+          reason: `@${interaction.user.username}: /dvc show`,
+          type: OverwriteType.Role
         }).catch(() => {
           // failed to show channel
           interaction.reply({
@@ -265,6 +277,9 @@ const Command = new SlashCommandBuilder()
         await voiceChannel.permissionOverwrites.create(user, {
           ViewChannel: true,
           Connect: true
+        }, {
+          reason: `@${interaction.user.username}: /dvc add user: @${user.username}`,
+          type: OverwriteType.Member
         }).catch(() => {
           // failed to add user
           interaction.reply({
@@ -279,6 +294,9 @@ const Command = new SlashCommandBuilder()
         await voiceChannel.permissionOverwrites.create(role.id, {
           ViewChannel: true,
           Connect: true
+        }, {
+          reason: `@${interaction.user.username}: /dvc add role: @${role.name}`,
+          type: OverwriteType.Role
         }).catch(() => {
           // failed to add role
           interaction.reply({
@@ -293,7 +311,14 @@ const Command = new SlashCommandBuilder()
         await interaction.reply({
           embeds: [
             EmbedUtil.baseEmbed(interaction.guild)
-              .setDescription(t("voice:commands.dvc.add.success", { user, role }))
+              .setDescription(t("voice:commands.dvc.add.success", {
+                added: [
+                  user.toString(),
+                  role.toString()
+                ]
+                  .filter((a) => a)
+                  .join(", ")
+              }))
           ],
           ephemeral: true
         })
@@ -311,7 +336,6 @@ const Command = new SlashCommandBuilder()
           .setDescription(t("voice:commands.dvc.deny.options.user.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.user.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.user.description"))
-          .setRequired(true)
       )
       .addRoleOption((option) =>
         option
@@ -319,7 +343,6 @@ const Command = new SlashCommandBuilder()
           .setDescription(t("voice:commands.dvc.deny.options.role.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.role.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.role.description"))
-          .setRequired(true)
       )
       .setFunction(async (interaction) => {
         const voiceChannel = await getVoiceChannel(interaction);
@@ -329,12 +352,15 @@ const Command = new SlashCommandBuilder()
 
         const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
-        const user = interaction.options.getUser("user", true);
-        const role = interaction.options.getRole("role", true);
+        const user = interaction.options.getUser("user");
+        const role = interaction.options.getRole("role");
 
-        await voiceChannel.permissionOverwrites.create(user, {
+        user && await voiceChannel.permissionOverwrites.create(user, {
           ViewChannel: false,
           Connect: false
+        }, {
+          reason: `@${interaction.user.username}: /dvc deny user: @${user.username}`,
+          type: OverwriteType.Member
         }).catch(() => {
           // failed to deny user
           interaction.reply({
@@ -346,10 +372,15 @@ const Command = new SlashCommandBuilder()
           });
         });
 
-        await voiceChannel.permissionOverwrites.create(role.id, {
+        role && await voiceChannel.permissionOverwrites.create(role.id, {
           ViewChannel: false,
           Connect: false
-        }).catch(() => {
+        },
+          {
+            reason: `@${interaction.user.username}: /dvc deny role: @${role.name}`,
+            type: OverwriteType.Role
+          }
+        ).catch(() => {
           // failed to deny role
           interaction.reply({
             embeds: [
@@ -363,7 +394,14 @@ const Command = new SlashCommandBuilder()
         await interaction.reply({
           embeds: [
             EmbedUtil.baseEmbed(interaction.guild)
-              .setDescription(t("voice:commands.dvc.deny.success", { user, role }))
+              .setDescription(t("voice:commands.dvc.deny.success", {
+                denied: [
+                  user?.toString(),
+                  role?.toString()
+                ]
+                  .filter((a) => a)
+                  .join(", ")
+              }))
           ],
           ephemeral: true
         })
@@ -381,7 +419,6 @@ const Command = new SlashCommandBuilder()
           .setDescription(t("voice:commands.dvc.remove.options.user.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.user.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.user.description"))
-          .setRequired(true)
       )
       .addRoleOption((option) =>
         option
@@ -389,7 +426,6 @@ const Command = new SlashCommandBuilder()
           .setDescription(t("voice:commands.dvc.remove.options.role.description"))
           .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.role.name"))
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.role.description"))
-          .setRequired(true)
       )
       .setFunction(async (interaction) => {
         const voiceChannel = await getVoiceChannel(interaction);
@@ -399,10 +435,10 @@ const Command = new SlashCommandBuilder()
 
         const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
-        const user = interaction.options.getUser("user", true);
-        const role = interaction.options.getRole("role", true);
+        const user = interaction.options.getUser("user");
+        const role = interaction.options.getRole("role");
 
-        await voiceChannel.permissionOverwrites.delete(user).catch(() => {
+        user && await voiceChannel.permissionOverwrites.delete(user, `@${interaction.user.username}: /dvc delete user: @${user.username}`).catch(() => {
           // failed to remove user
           interaction.reply({
             embeds: [
@@ -413,7 +449,7 @@ const Command = new SlashCommandBuilder()
           });
         });
 
-        await voiceChannel.permissionOverwrites.delete(role.id).catch(() => {
+        role && await voiceChannel.permissionOverwrites.delete(role.id, `@${interaction.user.username}: /dvc delete role: @${role.name}`).catch(() => {
           // failed to remove role
           interaction.reply({
             embeds: [
@@ -452,6 +488,9 @@ const Command = new SlashCommandBuilder()
           return voiceChannel.permissionOverwrites.create(member, {
             ViewChannel: true,
             Connect: true
+          }, {
+            reason: `@${interaction.user.username}: /dvc freeze`,
+            type: OverwriteType.Member
           }).catch(() => {
             // failed to freeze user
             interaction.reply({
@@ -488,7 +527,7 @@ const Command = new SlashCommandBuilder()
 
         const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
-        await voiceChannel.permissionOverwrites.set([]).catch(() => {
+        await voiceChannel.permissionOverwrites.set([], `@${interaction.user.username}: /dvc clear`).catch(() => {
           // failed to clear permissions
           interaction.reply({
             embeds: [
@@ -533,7 +572,7 @@ const Command = new SlashCommandBuilder()
         const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
         const limit = interaction.options.getInteger("limit", true);
-        await voiceChannel.setUserLimit(limit).catch(() => {
+        await voiceChannel.setUserLimit(limit, `@${interaction.user.username}: /dvc limit ${limit}`).catch(() => {
           // failed to set user limit
           interaction.reply({
             embeds: [
@@ -577,7 +616,7 @@ const Command = new SlashCommandBuilder()
         const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
         const bitrate = interaction.options.getInteger("bitrate", true);
-        await voiceChannel.setBitrate(bitrate).catch(() => {
+        await voiceChannel.setBitrate(bitrate, `@${interaction.user.username}: /dvc bitrate ${bitrate}`).catch(() => {
           // failed to set bitrate
           interaction.reply({
             embeds: [
@@ -615,14 +654,23 @@ const Command = new SlashCommandBuilder()
           embeds: [
             EmbedUtil.baseEmbed(interaction.guild)
               .setTitle(voiceChannel.name)
-              .setDescription(`\`\`\`diff${voiceChannel.permissionOverwrites.valueOf().map((v, k) => {
-                return [
-                  v.type == OverwriteType.Member ? `<@${k}>` : `<@&${k}>`,
-                  v.allow.toArray().map((a) => `+ ${a}`).join("\n"),
-                  v.deny.toArray().map((d) => `- ${d}`).join("\n")
-                ].join("\n")
-              }).join('\n')
-                }\`\`\``)
+              .setDescription(
+                "```diff\n" +
+                voiceChannel.permissionOverwrites.valueOf().map((v, k) => {
+                  if (v.type == OverwriteType.Role && v.id == interaction.guild!.roles.everyone.id) {
+                    return;
+                  }
+
+                  return [
+                    v.type == OverwriteType.Member ? voiceChannel.guild.members.cache.get(k)?.user.tag : voiceChannel.guild.roles.cache.get(k)?.name,
+                    v.allow.toArray().length > 0 && v.allow.toArray().map((a) => `+ ${a}`).join("\n"),
+                    v.allow.toArray().length > 0 && v.deny.toArray().map((d) => `- ${d}`).join("\n")
+                  ]
+                    .filter((a) => a)
+                    .join("\n")
+                }).join('\n')
+                + "```"
+              )
               .setFields([
                 {
                   name: t("voice:commands.dvc.info.fields.locked"),
