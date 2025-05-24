@@ -1,40 +1,39 @@
-import { ChatInputCommandInteraction, OverwriteType } from "discord.js";
+import { ChatInputCommandInteraction, OverwriteType, VoiceBasedChannel } from "discord.js";
 import SlashCommandBuilder from "../../../core/loaders/objects/customSlashCommandBuilder.js";
-import VoiceModule from "../index.js";
 import EmbedUtil from "../../util/util/embed.js";
 import i18next, { t } from "i18next";
 import LanguageLoader from "../../../core/loaders/languageLoader.js";
 import { db } from "../../../core/index.js";
 import { Dvc } from "../entities/dvc.entity.js";
 
-async function getVoiceChannel(interaction: ChatInputCommandInteraction) {
+async function getVoiceChannelAndTFunction(interaction: ChatInputCommandInteraction): Promise<[VoiceBasedChannel | null, typeof t]> {
 
   const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
 
   const member = interaction.member;
   if (!member) {
-    return null;
+    return [null, t];
   }
 
   if (!("voice" in member)) {
     await interaction.reply(t("voice:errors.noMemberVoice"));
-    return null;
+    return [null, t];
   }
 
   const voiceChannel = member.voice.channel;
   if (!voiceChannel) {
     await interaction.reply(t("voice:errors.noMemberVoice"));
-    return null;
+    return [null, t];
   }
 
   const dvcRepo = db.em.getRepository(Dvc);
 
   if (!await dvcRepo.findOne({ channelId: voiceChannel.id })) {
     await interaction.reply(t("voice:errors.notDynamicChannel"));
-    return null;
+    return [null, t]
   }
 
-  return voiceChannel;
+  return [voiceChannel, t];
 }
 
 const Command = new SlashCommandBuilder()
@@ -57,12 +56,8 @@ const Command = new SlashCommandBuilder()
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const name = interaction.options.getString("name", true);
         await voiceChannel.setName(name, `@${interaction.user.username}: /dvc rename ${name}`).catch(() => {
@@ -92,12 +87,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.lock.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.lock.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           Connect: false
@@ -131,12 +122,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.unlock.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.unlock.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           Connect: true
@@ -170,12 +157,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.hide.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.hide.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           ViewChannel: false
@@ -209,12 +192,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.show.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.show.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         await voiceChannel.permissionOverwrites.create(interaction.guild!.roles.everyone, {
           ViewChannel: true
@@ -264,12 +243,8 @@ const Command = new SlashCommandBuilder()
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const user = interaction.options.getUser("user", true);
         const role = interaction.options.getRole("role", true);
@@ -345,12 +320,8 @@ const Command = new SlashCommandBuilder()
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.role.description"))
       )
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const user = interaction.options.getUser("user");
         const role = interaction.options.getRole("role");
@@ -428,12 +399,8 @@ const Command = new SlashCommandBuilder()
           .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.role.description"))
       )
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const user = interaction.options.getUser("user");
         const role = interaction.options.getRole("role");
@@ -476,12 +443,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.freeze.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.freeze.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const members = voiceChannel.members.map((member) => member.user);
         await Promise.all(members.map((member) => {
@@ -520,12 +483,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.clear.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.clear.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         await voiceChannel.permissionOverwrites.set([], `@${interaction.user.username}: /dvc clear`).catch(() => {
           // failed to clear permissions
@@ -564,12 +523,8 @@ const Command = new SlashCommandBuilder()
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const limit = interaction.options.getInteger("limit", true);
         await voiceChannel.setUserLimit(limit, `@${interaction.user.username}: /dvc limit ${limit}`).catch(() => {
@@ -608,12 +563,8 @@ const Command = new SlashCommandBuilder()
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         const bitrate = interaction.options.getInteger("bitrate", true);
         await voiceChannel.setBitrate(bitrate, `@${interaction.user.username}: /dvc bitrate ${bitrate}`).catch(() => {
@@ -643,12 +594,8 @@ const Command = new SlashCommandBuilder()
       .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.info.name"))
       .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.info.description"))
       .setFunction(async (interaction) => {
-        const voiceChannel = await getVoiceChannel(interaction);
-        if (!voiceChannel) {
-          return;
-        }
-
-        const t = await i18next.changeLanguage(interaction.guild?.preferredLocale || "en-US");
+        const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
+        if (!voiceChannel) return;
 
         await interaction.reply({
           embeds: [
