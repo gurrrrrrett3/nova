@@ -5,7 +5,7 @@ export default class CoreModule extends Module {
     constructor() {
         super({
             name: "core",
-            description: "The core commands for onebot",
+            description: "Core module for the bot, providing essential functionality and utilities.",
         });
     }
 

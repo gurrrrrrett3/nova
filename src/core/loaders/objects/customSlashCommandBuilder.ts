@@ -31,7 +31,8 @@ export default class CommandBuilder {
     | CustomSubommandBuilder
     | CustomSlashCommandSubcommandGroupBuilder
   )[] = [];
-  execute: (interaction: ChatInputCommandInteraction) => Promise<any> = async () => Promise.resolve();
+  public execute: (interaction: ChatInputCommandInteraction) => Promise<any> = async () => Promise.resolve();
+  public postload?: () => (Promise<void> | void)
 
   constructor() { }
 
@@ -44,6 +45,11 @@ export default class CommandBuilder {
 
   setFunction(callback: (interaction: ChatInputCommandInteraction) => Promise<any>): this {
     this.execute = callback;
+    return this;
+  }
+
+  setPostloadHook(callback: () => Promise<void> | void): this {
+    this.postload = callback;
     return this;
   }
 

@@ -64,6 +64,13 @@ export default class CommandLoader {
       }
     }
 
+    // commands are all ready, run command postload hooks
+    const hooks = commands.map(command => command.postload).filter(Boolean)
+    if (hooks.length > 0) {
+      this.logger.log(`Running ${hooks.length} postload hook${hooks.length != 1 ? 's' : ''}...`);
+      await Promise.all(hooks.map(hook => hook()));
+    }
+
     //Collect list of command files
     let commandsToDeploy: RESTPostAPIApplicationCommandsJSONBody[] = [];
 

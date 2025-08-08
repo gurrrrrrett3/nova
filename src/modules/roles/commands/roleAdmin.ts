@@ -11,28 +11,28 @@ import i18next, { t } from "i18next";
 const Command = new SlashCommandBuilder()
   .setName("roleadmin")
   .setDescription(t("roles:commands.roleadmin.description"))
-  .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.name"))
-  .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.description"))
+  .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.name"))
+  .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.description"))
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
   .setDMPermission(false)
   .addSubcommandGroup((group) =>
     group
       .setName("autoroles")
       .setDescription(t("roles:commands.roleadmin.autoroles.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.description"))
       .addSubcommand((subcommand) =>
         subcommand
           .setName("add")
           .setDescription(t("roles:commands.roleadmin.autoroles.add.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.add.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.add.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
               .setDescription(t("roles:commands.roleadmin.autoroles.add.options.role.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.options.role.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.add.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.add.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.add.options.role.description"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
@@ -63,14 +63,14 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("remove")
           .setDescription(t("roles:commands.roleadmin.autoroles.remove.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.remove.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.remove.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
               .setDescription(t("roles:commands.roleadmin.autoroles.remove.options.role.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.options.role.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.remove.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.remove.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.remove.options.role.description"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
@@ -109,8 +109,8 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("list")
           .setDescription(t("roles:commands.roleadmin.autoroles.list.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.list.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.autoroles.list.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.list.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.autoroles.list.description"))
           .setFunction(async (interaction) => {
             const guildId = interaction.guildId!;
 
@@ -147,43 +147,43 @@ const Command = new SlashCommandBuilder()
     group
       .setName("rolepicker")
       .setDescription(t("roles:commands.roleadmin.rolepicker.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.description"))
       .addSubcommand((subcommand) =>
         subcommand
           .setName("add")
           .setDescription(t("roles:commands.roleadmin.rolepicker.add.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
               .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.role.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.role.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.role.description"))
               .setRequired(true)
           )
           .addStringOption((option) =>
             option
               .setName("name")
               .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.name.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.name.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.name.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.name.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.name.description"))
               .setRequired(true)
           )
           .addStringOption((option) =>
             option
               .setName("description")
               .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.description.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.description.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.description.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.description.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.description.description"))
           )
           .addStringOption((option) =>
             option
               .setName("emoji")
               .setDescription(t("roles:commands.roleadmin.rolepicker.add.options.emoji.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.emoji.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.add.options.emoji.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.emoji.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.add.options.emoji.description"))
           )
           .setFunction(async (interaction) => {
             const roleToAdd = interaction.options.getRole("role", true);
@@ -219,13 +219,13 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("remove")
           .setDescription(t("roles:commands.roleadmin.rolepicker.remove.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.remove.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.remove.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.remove.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.remove.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
               .setDescription(t("roles:commands.roleadmin.rolepicker.remove.options.role.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.remove.options.role.name"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.remove.options.role.name"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
@@ -263,8 +263,8 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("list")
           .setDescription(t("roles:commands.roleadmin.rolepicker.list.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.list.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.list.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.list.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.list.description"))
           .setFunction(async (interaction) => {
             const guildId = interaction.guildId!;
 
@@ -298,22 +298,22 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("order")
           .setDescription(t("roles:commands.roleadmin.rolepicker.order.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.order.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.order.description"))
           .addRoleOption((option) =>
             option
               .setName("role")
               .setDescription(t("roles:commands.roleadmin.rolepicker.order.options.role.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.role.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.role.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.order.options.role.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.order.options.role.description"))
               .setRequired(true)
           )
           .addIntegerOption((option) =>
             option
               .setName("order")
               .setDescription(t("roles:commands.roleadmin.rolepicker.order.options.order.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.order.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.order.options.order.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.order.options.order.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.order.options.order.description"))
               .setRequired(true)
           )
           .setFunction(async (interaction) => {
@@ -377,8 +377,8 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("embed")
           .setDescription(t("roles:commands.roleadmin.rolepicker.embed.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.embed.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("roles:commands.roleadmin.rolepicker.embed.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.embed.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("roles:commands.roleadmin.rolepicker.embed.description"))
           .setFunction(async (interaction) => {
             const channel = interaction.channel!;
 

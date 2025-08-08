@@ -39,20 +39,20 @@ async function getVoiceChannelAndTFunction(interaction: ChatInputCommandInteract
 const Command = new SlashCommandBuilder()
   .setName("dvc")
   .setDescription(t("voice:commands.dvc.description"))
-  .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.name"))
-  .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.description"))
+  .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.name"))
+  .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.description"))
   .addSubcommand((subcommand) =>
     subcommand
       .setName("rename")
       .setDescription(t("voice:commands.dvc.rename.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.rename.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.rename.description"))
       .addStringOption((option) =>
         option
           .setName("name")
           .setDescription(t("voice:commands.dvc.rename.options.name.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.options.name.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.rename.options.name.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.rename.options.name.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.rename.options.name.description"))
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
@@ -84,8 +84,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("lock")
       .setDescription(t("voice:commands.dvc.lock.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.lock.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.lock.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.lock.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.lock.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;
@@ -119,8 +119,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("unlock")
       .setDescription(t("voice:commands.dvc.unlock.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.unlock.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.unlock.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.unlock.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.unlock.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;
@@ -154,8 +154,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("hide")
       .setDescription(t("voice:commands.dvc.hide.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.hide.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.hide.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.hide.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.hide.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;
@@ -189,8 +189,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("show")
       .setDescription(t("voice:commands.dvc.show.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.show.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.show.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.show.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.show.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;
@@ -224,22 +224,22 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("add")
       .setDescription(t("voice:commands.dvc.add.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.add.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.add.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.add.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.add.description"))
       .addUserOption((option) =>
         option
           .setName("user")
           .setDescription(t("voice:commands.dvc.add.options.user.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.add.options.user.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.add.options.user.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.add.options.user.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.add.options.user.description"))
           .setRequired(true)
       )
       .addRoleOption((option) =>
         option
           .setName("role")
           .setDescription(t("voice:commands.dvc.add.options.role.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.add.options.role.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.add.options.role.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.add.options.role.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.add.options.role.description"))
           .setRequired(true)
       )
       .setFunction(async (interaction) => {
@@ -303,21 +303,21 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("deny")
       .setDescription(t("voice:commands.dvc.deny.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.deny.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.deny.description"))
       .addUserOption((option) =>
         option
           .setName("user")
           .setDescription(t("voice:commands.dvc.deny.options.user.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.user.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.user.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.deny.options.user.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.deny.options.user.description"))
       )
       .addRoleOption((option) =>
         option
           .setName("role")
           .setDescription(t("voice:commands.dvc.deny.options.role.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.role.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.deny.options.role.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.deny.options.role.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.deny.options.role.description"))
       )
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
@@ -382,21 +382,21 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("remove")
       .setDescription(t("voice:commands.dvc.remove.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.remove.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.remove.description"))
       .addUserOption((option) =>
         option
           .setName("user")
           .setDescription(t("voice:commands.dvc.remove.options.user.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.user.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.user.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.remove.options.user.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.remove.options.user.description"))
       )
       .addRoleOption((option) =>
         option
           .setName("role")
           .setDescription(t("voice:commands.dvc.remove.options.role.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.role.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.remove.options.role.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.remove.options.role.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.remove.options.role.description"))
       )
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
@@ -440,8 +440,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("freeze")
       .setDescription(t("voice:commands.dvc.freeze.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.freeze.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.freeze.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.freeze.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.freeze.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;
@@ -480,8 +480,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("clear")
       .setDescription(t("voice:commands.dvc.clear.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.clear.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.clear.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.clear.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.clear.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;
@@ -510,14 +510,14 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("limit")
       .setDescription(t("voice:commands.dvc.limit.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.limit.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.limit.description"))
       .addIntegerOption((option) =>
         option
           .setName("limit")
           .setDescription(t("voice:commands.dvc.limit.options.limit.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.options.limit.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.limit.options.limit.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.limit.options.limit.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.limit.options.limit.description"))
           .setMinValue(0)
           .setMaxValue(99)
           .setRequired(true)
@@ -551,14 +551,14 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("bitrate")
       .setDescription(t("voice:commands.dvc.bitrate.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.bitrate.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.bitrate.description"))
       .addIntegerOption((option) =>
         option
           .setName("bitrate")
           .setDescription(t("voice:commands.dvc.bitrate.options.bitrate.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.options.bitrate.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.bitrate.options.bitrate.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.bitrate.options.bitrate.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.bitrate.options.bitrate.description"))
           .setMinValue(8000)
           .setRequired(true)
       )
@@ -591,8 +591,8 @@ const Command = new SlashCommandBuilder()
     subcommand
       .setName("info")
       .setDescription(t("voice:commands.dvc.info.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.info.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.dvc.info.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.info.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.dvc.info.description"))
       .setFunction(async (interaction) => {
         const [voiceChannel, t] = await getVoiceChannelAndTFunction(interaction);
         if (!voiceChannel) return;

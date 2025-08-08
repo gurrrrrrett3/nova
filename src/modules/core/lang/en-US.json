@@ -2,5 +2,21 @@
     "enabled": "Enabled",
     "disabled": "Disabled",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "commands": {
+        "help": {
+            "name": "help",
+            "description": "Get help with the bot commands.",
+            "options": {
+                "command": {
+                    "name": "command",
+                    "description": "The command you need help with."
+                },
+                "module": {
+                    "name": "module",
+                    "description": "The module you need help with."
+                }
+            }
+        }
+    }
 }

@@ -171,6 +171,27 @@
                     }
                 }
             }
+        },
+        "babyshake": {
+            "name": "babyshake",
+            "description": "Move a user back and forth between voice channels to \"wake them up\".",
+            "options": {
+                "victim": {
+                    "name": "victim",
+                    "description": "The user to shake."
+                },
+                "time": {
+                    "name": "time",
+                    "description": "The duration in seconds to shake."
+                }
+            },
+            "error": {
+                "noChannel": "Victim must be in a voice channel.",
+                "memberNotFound": "Could not find the specified member.",
+                "noViewableChannels": "User cannot view any voice channels."
+            },
+            "start": "Shaking {{victim}} for {{time}} seconds.",
+            "end": "Finished shaking {{victim}}."
         }
     },
     "messages": {

@@ -22,9 +22,9 @@ export default class Module<Config extends {
   public name: string = "";
   public description: string = "";
 
-  private client?: Client;
-  private commands: Map<string, CustomCommandBuilder> = new Map();
-  private interactions: Map<string, InteractionHandler> = new Map();
+  private _client?: Client;
+  private _commands: Map<string, CustomCommandBuilder> = new Map();
+  private _interactions: Map<string, InteractionHandler> = new Map();
   protected logger: Logger
   public config: ConfigProvider<Config>
   public location: string = path.resolve("./dist/modules/");
@@ -35,10 +35,10 @@ export default class Module<Config extends {
     this.description = options.description || "";
     this.location = options.location || this.location;
 
-    this.client = bot.client;
+    this._client = bot.client;
     this.logger = new Logger(this.name);
     if (Core.config.get("showModuleLoadInfo")) {
-      this.client.on("ready", () => {
+      this._client.on("ready", () => {
         this.logger.log(`Loaded module.`);
       });
     }
@@ -73,7 +73,7 @@ export default class Module<Config extends {
     const commandFolder = fs.readdirSync(path.resolve(this.location, `${this.name}/commands`));
 
     let commands: CustomCommandBuilder[] = [];
-    this.commands = new Map();
+    this._commands = new Map();
 
     await Promise.all(
       commandFolder.map(async (commandFile) => {
@@ -84,7 +84,7 @@ export default class Module<Config extends {
           command.setModule(this.name);
           commands.push(command as CustomCommandBuilder);
 
-          this.commands.set(command.getName(), command);
+          this._commands.set(command.getName(), command);
         } catch (e) {
           this.logger.error("CommandLoader", `Error loading command ${commandFile}`);
           console.error(e);
@@ -107,7 +107,7 @@ export default class Module<Config extends {
     const interactionFolder = fs.readdirSync(path.resolve(`./dist/modules/${this.name}/interactions`));
 
     let interactions: InteractionHandler[] = [];
-    this.interactions = new Map();
+    this._interactions = new Map();
 
     for (const interactionFile of interactionFolder) {
       if (!interactionFile.endsWith(".js")) continue;
@@ -118,7 +118,7 @@ export default class Module<Config extends {
         interaction.module = this.name;
         interactions.push(interaction);
 
-        this.interactions.set(interaction.id, interaction);
+        this._interactions.set(interaction.id, interaction);
       } catch (e) {
         this.logger.error(
           "InteractionLoader",
@@ -128,5 +128,17 @@ export default class Module<Config extends {
     }
 
     this.logger.debug(`Loaded ${interactions.length} interactions`);
+  }
+
+  public get commands(): Map<string, CustomCommandBuilder> {
+    return this._commands;
+  }
+
+  public get interactions(): Map<string, InteractionHandler> {
+    return this._interactions;
+  }
+
+  public get client(): Client {
+    return this._client!;
   }
 }

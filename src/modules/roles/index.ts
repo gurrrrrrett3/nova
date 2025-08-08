@@ -11,7 +11,7 @@ export default class RolesModule extends Module {
     constructor() {
         super({
             name: "roles",
-            description: "No description provided>",
+            description: "Handles role management features such as auto-roles and role pickers.",
         });
     }
 

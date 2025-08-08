@@ -31,7 +31,6 @@ export default class Bot {
       this.moduleLoader.onReady();
     });
 
-    LanguageLoader.loadLanguages();
     this.commandLoader = new CommandLoader(this.client);
     this.moduleLoader = new ModuleLoader(this);
 
@@ -41,6 +40,7 @@ export default class Bot {
   }
 
   public async init() {
+    await LanguageLoader.loadLanguages();
     this.moduleLoader.loadModules();
   }
 

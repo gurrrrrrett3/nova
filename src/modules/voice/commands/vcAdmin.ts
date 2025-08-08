@@ -10,28 +10,28 @@ import { GuildConfig } from "../../core/entities/demoEntity.js";
 const Command = new SlashCommandBuilder()
     .setName("vcadmin")
     .setDescription(t("voice:commands.vcadmin.description"))
-    .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.name"))
-    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.description"))
+    .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.name"))
+    .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.description"))
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setDMPermission(false)
     .addSubcommandGroup((group) =>
         group
             .setName("dvc")
             .setDescription(t("voice:commands.vcadmin.dvc.description"))
-            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.name"))
-            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.dvc.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.dvc.description"))
             .addSubcommand((subcommand) =>
                 subcommand
                     .setName("setlobby")
                     .setDescription(t("voice:commands.vcadmin.dvc.setlobby.description"))
-                    .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.name"))
-                    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.description"))
+                    .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.dvc.setlobby.name"))
+                    .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.dvc.setlobby.description"))
                     .addChannelOption((option) =>
                         option
                             .setName("channel")
                             .setDescription(t("voice:commands.vcadmin.dvc.setlobby.options.channel.description"))
-                            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.options.channel.name"))
-                            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.dvc.setlobby.options.channel.description"))
+                            .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.dvc.setlobby.options.channel.name"))
+                            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.dvc.setlobby.options.channel.description"))
                             .setRequired(true)
                             .addChannelTypes(ChannelType.GuildVoice)
                     )
@@ -67,20 +67,20 @@ const Command = new SlashCommandBuilder()
         group
             .setName("autoafk")
             .setDescription(t("voice:commands.vcadmin.autoafk.description"))
-            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.name"))
-            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.autoafk.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.autoafk.description"))
             .addSubcommand((subcommand) =>
                 subcommand
                     .setName("ondeafen")
                     .setDescription(t("voice:commands.vcadmin.autoafk.ondeafen.description"))
-                    .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.name"))
-                    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.description"))
+                    .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.autoafk.ondeafen.name"))
+                    .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.autoafk.ondeafen.description"))
                     .addBooleanOption((option) =>
                         option
                             .setName("enabled")
                             .setDescription(t("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.description"))
-                            .setNameLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.name"))
-                            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.description"))
+                            .setNameLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.name"))
+                            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("voice:commands.vcadmin.autoafk.ondeafen.options.enabled.description"))
                             .setRequired(true)
                     )
                     .setFunction(async (interaction) => {

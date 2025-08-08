@@ -9,28 +9,28 @@ import EmbedUtil from "../../util/util/embed.js";
 const Command = new SlashCommandBuilder()
   .setName("logadmin")
   .setDescription(t("logging:commands.logadmin.description"))
-  .setNameLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.name"))
-  .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.description"))
+  .setNameLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.name"))
+  .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.description"))
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
   .setDMPermission(false)
   .addSubcommandGroup((group) =>
     group
       .setName("channels")
       .setDescription(t("logging:commands.logadmin.channels.description"))
-      .setNameLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.name"))
-      .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.description"))
+      .setNameLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.name"))
+      .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.description"))
       .addSubcommand((subcommand) =>
         subcommand
           .setName("messagelogging")
           .setDescription(t("logging:commands.logadmin.channels.messagelogging.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.messagelogging.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.messagelogging.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.messagelogging.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.messagelogging.description"))
           .addChannelOption((option) =>
             option
               .setName("channel")
               .setDescription(t("logging:commands.logadmin.channels.messagelogging.options.channel.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.messagelogging.options.channel.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.messagelogging.options.channel.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.messagelogging.options.channel.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.messagelogging.options.channel.description"))
               .addChannelTypes(ChannelType.GuildText)
           )
           .setFunction(async (interaction) => {
@@ -66,14 +66,14 @@ const Command = new SlashCommandBuilder()
         subcommand
           .setName("memberlogging")
           .setDescription(t("logging:commands.logadmin.channels.memberlogging.description"))
-          .setNameLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.memberlogging.name"))
-          .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.memberlogging.description"))
+          .setNameLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.memberlogging.name"))
+          .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.memberlogging.description"))
           .addChannelOption((option) =>
             option
               .setName("channel")
               .setDescription(t("logging:commands.logadmin.channels.memberlogging.options.channel.description"))
-              .setNameLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.memberlogging.options.channel.name"))
-              .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("logging:commands.logadmin.channels.memberlogging.options.channel.description"))
+              .setNameLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.memberlogging.options.channel.name"))
+              .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("logging:commands.logadmin.channels.memberlogging.options.channel.description"))
               .addChannelTypes(ChannelType.GuildText)
           )
           .setFunction(async (interaction) => {

@@ -16,6 +16,14 @@ export default class VoiceModule extends Module {
         });
     }
 
+    public static babyShakeCache: Record<string, {
+        sourceChannelId: string,
+        viewableChannelIds: string[],
+        nextTargetChannelId: string,
+        timeLeft: number,
+        timer: NodeJS.Timeout
+    }> = {}
+
     override async onLoad(): Promise<boolean> {
 
         const dvcRepo = db.em.getRepository(Dvc)
@@ -38,6 +46,7 @@ export default class VoiceModule extends Module {
 
         bot.client.on("voiceStateUpdate", async (oldState, newState) => {
             await Promise.all([
+                // dvc
                 new Promise(async (resolve) => {
                     if (oldState.channelId == newState.channelId) return;
                     const t = await i18next.changeLanguage(newState.guild?.preferredLocale || "en-US");
@@ -110,6 +119,7 @@ export default class VoiceModule extends Module {
                     }
                     resolve(true);
                 }),
+                // auto afk on deafen
                 new Promise(async (resolve) => {
                     if (!newState.channel) return;
                     if (oldState.deaf == newState.deaf && oldState.selfDeaf == newState.selfDeaf) return;
@@ -139,6 +149,20 @@ export default class VoiceModule extends Module {
                         }
 
                     }
+                }),
+                // babyshake
+                new Promise(async (resolve) => {
+                    if (oldState.channelId == newState.channelId) return;
+                    const cache = VoiceModule.babyShakeCache[newState.id];
+                    if (!cache) return;
+
+                    if (newState.channelId == cache.sourceChannelId || newState.channelId != cache.nextTargetChannelId) {
+                        // member moved to source or next target channel, reset timer
+                        clearInterval(cache.timer);
+                        delete VoiceModule.babyShakeCache[newState.id];
+                        return;
+                    }
+                    resolve(true);
                 })
             ])
         })

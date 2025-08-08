@@ -8,38 +8,38 @@ import EmbedUtil from "../util/embed.js";
 const Command = new SlashCommandBuilder()
     .setName("lock")
     .setDescription(t("util:commands.lock.description"))
-    .setNameLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.name"))
-    .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.description"))
+    .setNameLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.name"))
+    .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.description"))
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setDMPermission(false)
     .addChannelOption((option) =>
         option
             .setName("channel")
             .setDescription(t("util:commands.lock.options.channel.description"))
-            .setNameLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.channel.name"))
-            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.channel.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.channel.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.channel.description"))
             .addChannelTypes(ChannelType.GuildText)
     )
     .addStringOption((option) =>
         option
             .setName("reason")
             .setDescription(t("util:commands.lock.options.reason.description"))
-            .setNameLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.reason.name"))
-            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.reason.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.reason.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.reason.description"))
     )
     .addBooleanOption((option) =>
         option
             .setName("showmessage")
             .setDescription(t("util:commands.lock.options.showmessage.description"))
-            .setNameLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.showmessage.name"))
-            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.showmessage.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.showmessage.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.showmessage.description"))
     )
     .addBooleanOption((option) =>
         option
             .setName("hide")
             .setDescription(t("util:commands.lock.options.hide.description"))
-            .setNameLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.hide.name"))
-            .setDescriptionLocalizations(LanguageLoader.getKeyLocalications("util:commands.lock.options.hide.description"))
+            .setNameLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.hide.name"))
+            .setDescriptionLocalizations(LanguageLoader.getKeyLocalizations("util:commands.lock.options.hide.description"))
     )
     .setFunction(async (interaction) => {
         const partialChannel = interaction.options.getChannel("channel") || interaction.channel;

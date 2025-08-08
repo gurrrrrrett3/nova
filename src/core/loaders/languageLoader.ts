@@ -9,8 +9,7 @@ export default class LanguageLoader {
     public static logger = new Logger("Language");
 
     public static async loadLanguages() {
-
-        i18next.init({
+        await i18next.init({
             fallbackLng: "en-US",
             debug: false,
             resources: {},
@@ -20,7 +19,12 @@ export default class LanguageLoader {
         });
     }
 
-    public static getKeyLocalications(key: string): any { // Map<string, string> as any to avoid type errors
+    public static getKeyLocalizations(key: string): any { // Map<string, string> as any to avoid type errors
+        if (!i18next.isInitialized) {
+            LanguageLoader.logger.error("i18next is not initialized. Please call loadLanguages() first.");
+            return {};
+        }
+
         const keys = i18next.services.resourceStore.data;
         const langs = Object.keys(keys);
 

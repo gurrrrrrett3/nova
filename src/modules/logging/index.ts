@@ -11,7 +11,7 @@ export default class LoggingModule extends Module {
     constructor() {
         super({
             name: "logging",
-            description: "No description provided>",
+            description: "Handles various logging events such as message updates, deletions, and member joins/leaves.",
         });
     }
 
