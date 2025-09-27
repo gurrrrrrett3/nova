@@ -6,7 +6,7 @@ export default class UtilModule extends Module {
     constructor() {
         super({
             name: "util",
-            description: "Tiny ]utility module for various helper functions.",
+            description: "Tiny utility module for various helper functions.",
         });
     }
 

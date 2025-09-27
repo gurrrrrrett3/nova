@@ -39,7 +39,7 @@ const Command = new SlashCommandBuilder()
         let clearedAmount = 0;
 
         // type checking
-        if (channel.type == ChannelType.DM) return interaction.reply(t("util:error.dmChannel"));
+        if (channel.type == ChannelType.DM || channel.type == ChannelType.GroupDM) return interaction.reply(t("util:error.dmChannel"));
 
         if (user) {
             const messages = await channel.messages.fetch({ limit: amount });

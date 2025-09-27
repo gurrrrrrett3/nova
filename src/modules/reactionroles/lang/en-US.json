@@ -1,0 +1,56 @@
+{
+    "errors": {
+        "messageNotFound": {
+            "title": "Message not found",
+            "description": "That message ID doesn't corespond with a valid message. Enable Developer tools under Appearence in the settings, then right click the message, and hit \"Copy ID\"."
+        },
+        "invalidEmoji": {
+            "title": "Invalid Emoji",
+            "description": "That's not a valid emoji. Please select either a default emoji or a custom emoji from this server (or another server I'm in) for the reaction."
+        }
+    },
+    "commands": {
+        "reactionroleadmin": {
+            "name": "reactionroleadmin",
+            "description": "Manage reaction roles",
+            "set": {
+                "name": "set",
+                "options": {
+                    "type": {
+                        "name": "type",
+                        "add": "Add",
+                        "remove": "Remove",
+                        "value": "Value"
+                    },
+                    "channel": {
+                        "name": "channel"
+                    },
+                    "messageid": {
+                        "name": "messageid"
+                    },
+                    "emoji": {
+                        "name": "emoji"
+                    },
+                    "role": {
+                        "name": "role"
+                    }
+                },
+                "success": "Reaction Role Created"
+            },
+            "delete": {
+                "name": "delete",
+                "options": {
+                    "channel": {
+                        "name": "channel"
+                    },
+                    "messageid": {
+                        "name": "messageid"
+                    },
+                    "emoji": {
+                        "name": "emoji"
+                    }
+                }
+            }
+        }
+    }
+}

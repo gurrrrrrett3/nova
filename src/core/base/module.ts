@@ -38,7 +38,7 @@ export default class Module<Config extends {
     this._client = bot.client;
     this.logger = new Logger(this.name);
     if (Core.config.get("showModuleLoadInfo")) {
-      this._client.on("ready", () => {
+      this._client.once("clientReady", () => {
         this.logger.log(`Loaded module.`);
       });
     }

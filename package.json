@@ -37,7 +37,7 @@
     "@mikro-orm/postgresql": "^5.6.8",
     "@mikro-orm/reflection": "^5.6.8",
     "chalk": "^5.3.0",
-    "discord.js": "^14.2.0",
+    "discord.js": "^14.22.1",
     "dotenv": "^16.0.1",
     "i18next": "^23.11.5",
     "ts-node": "^10.9.1"

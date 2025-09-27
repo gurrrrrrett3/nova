@@ -66,7 +66,7 @@ export default class ModuleLoader {
 
     //load commands on ready
 
-    this.bot.client.once("ready", async () => {
+    this.bot.client.once("clientReady", async () => {
       const promises: Promise<CustomCommandBuilder[]>[] = [];
       this.modules.forEach(async (module) => {
         promises.push(

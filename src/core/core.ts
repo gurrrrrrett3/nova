@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { Client, Partials } from "discord.js";
 import Bot from "./bot.js";
 import ModuleLoader from "./loaders/moduleLoader.js";
 import Logger from "./utils/logger.js";
@@ -35,7 +35,11 @@ export default class Core {
     })
 
     const intents = ModuleLoader.getIntents();
-    this.Client = new Client({ intents });
+    this.Client = new Client({
+      intents, partials: [
+        Partials.Message, Partials.Channel, Partials.Reaction
+      ]
+    });
     this.bot = new Bot(this.Client);
 
     this.Client.login(this._token);

@@ -22,4 +22,8 @@ export default class EmbedUtil {
     public static errorEmbed(guild?: Guild | null) {
         return this.baseEmbed(guild).setColor(Colors.Red);
     }
+
+    public static successEmbed(guild?: Guild | null) {
+        return this.baseEmbed(guild).setColor(Colors.Green);
+    }
 }

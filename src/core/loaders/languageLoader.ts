@@ -1,7 +1,8 @@
 import fs from 'fs';
-import i18next from 'i18next';
+import i18next, { t } from 'i18next';
 import path from 'path';
 import { Logger } from '../utils/logger.js';
+import { APIApplicationCommandOptionChoice } from 'discord.js';
 
 export default class LanguageLoader {
 
@@ -36,6 +37,32 @@ export default class LanguageLoader {
         }
 
         return result;
+    }
+
+    public static getChoiceLocalizations<ValueType extends string | number>(root: string, choices: {
+        id: string,
+        value?: ValueType extends string ? string | undefined : number
+    }[] | string[]): APIApplicationCommandOptionChoice<ValueType>[] {
+        const localizations: APIApplicationCommandOptionChoice<ValueType>[] = [];
+
+        for (let choice of choices) {
+            if (typeof choice == "string") {
+                choice = {
+                    id: choice
+                }
+            }
+
+            const key = `${root}.${choice.id}`;
+            const choiceLocalizations = LanguageLoader.getKeyLocalizations(key);
+
+            localizations.push({
+                name: t(key),
+                name_localizations: choiceLocalizations,
+                value: (choice.value || choice.id) as ValueType
+            });
+        }
+
+        return localizations;
     }
 
 }

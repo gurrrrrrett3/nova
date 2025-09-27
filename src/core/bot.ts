@@ -26,7 +26,7 @@ export default class Bot {
     };
 
   constructor(public client: Client) {
-    this.client.on("ready", () => {
+    this.client.on("clientReady", () => {
       this.logger.info(`Logged in as ${this.client.user?.tag}`);
       this.moduleLoader.onReady();
     });
