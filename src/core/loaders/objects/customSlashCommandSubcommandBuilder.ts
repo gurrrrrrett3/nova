@@ -16,6 +16,8 @@ import Logger from "../../utils/logger.js";
 import CustomSlashCommandIntegerOption from "./customSlashCommandIntegerOption.js";
 import CustomSlashCommandNumberOption from "./customSlashCommandNumberOption.js";
 import CustomSlashCommandStringOption from "./customSlashCommandStringOption.js";
+import LanguageLoader from "../languageLoader.js";
+import { t } from "i18next";
 
 export default class CustomSlashCommandSubcommandBuilder {
   protected enabled: boolean = true;
@@ -27,7 +29,7 @@ export default class CustomSlashCommandSubcommandBuilder {
   )[] = [];
   execute: (interaction: ChatInputCommandInteraction) => Promise<void> = async () => Promise.resolve();
 
-  constructor() { }
+  constructor(private _languageRoot?: string) { }
 
   toJSON = this._builder.toJSON.bind(this._builder);
 
@@ -43,6 +45,14 @@ export default class CustomSlashCommandSubcommandBuilder {
 
   setName(name: string) {
     this._builder.setName(name);
+
+    if (this._languageRoot) {
+      this._languageRoot = `${this._languageRoot}.${name}`
+      this.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.name`))
+      this.setDescription(t(`${this._languageRoot}.description`))
+      this.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.description`))
+    }
+
     return this;
   }
 
@@ -86,6 +96,13 @@ export default class CustomSlashCommandSubcommandBuilder {
     const opt = new SlashCommandBooleanOption();
     let res = callback(opt);
     res = res || opt;
+
+    if (this._languageRoot) {
+      res.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.name`))
+      res.setDescription(t(`${this._languageRoot}.options.${res.name}.description`))
+      res.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.description`))
+    }
+
     this._builder.addBooleanOption(res);
     return this;
   }
@@ -96,6 +113,13 @@ export default class CustomSlashCommandSubcommandBuilder {
     const opt = new SlashCommandChannelOption();
     let res = callback(opt);
     res = res || opt;
+
+    if (this._languageRoot) {
+      res.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.name`))
+      res.setDescription(t(`${this._languageRoot}.options.${res.name}.description`))
+      res.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.description`))
+    }
+
     this._builder.addChannelOption(res);
     return this;
   }
@@ -106,6 +130,13 @@ export default class CustomSlashCommandSubcommandBuilder {
     const opt = new SlashCommandMentionableOption();
     let res = callback(opt);
     res = res || opt;
+
+    if (this._languageRoot) {
+      res.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.name`))
+      res.setDescription(t(`${this._languageRoot}.options.${res.name}.description`))
+      res.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.description`))
+    }
+
     this._builder.addMentionableOption(res);
     return this;
   }
@@ -114,6 +145,13 @@ export default class CustomSlashCommandSubcommandBuilder {
     const opt = new SlashCommandRoleOption();
     let res = callback(opt);
     res = res || opt;
+
+    if (this._languageRoot) {
+      res.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.name`))
+      res.setDescription(t(`${this._languageRoot}.options.${res.name}.description`))
+      res.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.description`))
+    }
+
     this._builder.addRoleOption(res);
     return this;
   }
@@ -122,6 +160,13 @@ export default class CustomSlashCommandSubcommandBuilder {
     const opt = new SlashCommandUserOption();
     let res = callback(opt);
     res = res || opt;
+
+    if (this._languageRoot) {
+      res.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.name`))
+      res.setDescription(t(`${this._languageRoot}.options.${res.name}.description`))
+      res.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${res.name}.description`))
+    }
+
     this._builder.addUserOption(res);
     return this;
   }
@@ -129,7 +174,7 @@ export default class CustomSlashCommandSubcommandBuilder {
   addStringOption(
     callback: (option: CustomSlashCommandStringOption) => CustomSlashCommandStringOption | undefined
   ): this {
-    const opt = new CustomSlashCommandStringOption();
+    const opt = new CustomSlashCommandStringOption(this._languageRoot);
     let res = callback(opt);
     res = res || opt;
     this._customOptions.push(res);
@@ -140,7 +185,7 @@ export default class CustomSlashCommandSubcommandBuilder {
   addIntegerOption(
     callback: (option: CustomSlashCommandIntegerOption) => CustomSlashCommandIntegerOption | undefined
   ): this {
-    const opt = new CustomSlashCommandIntegerOption();
+    const opt = new CustomSlashCommandIntegerOption(this._languageRoot);
     let res = callback(opt);
     res = res || opt;
     this._customOptions.push(res);
@@ -151,7 +196,7 @@ export default class CustomSlashCommandSubcommandBuilder {
   addNumberOption(
     callback: (option: CustomSlashCommandNumberOption) => CustomSlashCommandNumberOption | undefined
   ): this {
-    const opt = new CustomSlashCommandNumberOption();
+    const opt = new CustomSlashCommandNumberOption(this._languageRoot);
     let res = callback(opt);
     res = res || opt;
     this._customOptions.push(res);

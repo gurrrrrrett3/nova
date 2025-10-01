@@ -10,13 +10,15 @@ import CustomSlashCommandIntegerOption from "./customSlashCommandIntegerOption.j
 import CustomSlashCommandNumberOption from "./customSlashCommandNumberOption.js";
 import CustomSlashCommandStringOption from "./customSlashCommandStringOption.js";
 import CustomSlashCommandSubcommandBuilder from "./customSlashCommandSubcommandBuilder.js";
+import LanguageLoader from "../languageLoader.js";
+import { t } from "i18next";
 
 export default class CustomSlashCommandSubcommandGroupBuilder {
   protected enabled: boolean = true;
   private _builder = new SlashCommandSubcommandGroupBuilder();
   private _customOptions: CustomSlashCommandSubcommandBuilder[] = [];
 
-  constructor() { }
+  constructor(private _languageRoot?: string) { }
 
   toJSON = this._builder.toJSON.bind(this._builder);
 
@@ -27,6 +29,14 @@ export default class CustomSlashCommandSubcommandGroupBuilder {
 
   setName(name: string) {
     this._builder.setName(name);
+
+    if (this._languageRoot) {
+      this._languageRoot = `${this._languageRoot}.${name}`
+      this.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.name`))
+      this.setDescription(t(`${this._languageRoot}.description`))
+      this.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.description`))
+    }
+
     return this;
   }
 
@@ -44,6 +54,7 @@ export default class CustomSlashCommandSubcommandGroupBuilder {
     this._builder.setDescription(description);
     return this;
   }
+
   setDescriptionLocalization(locale: LocaleString, localizedDescription: string | null) {
     this._builder.setDescriptionLocalization(locale, localizedDescription);
     return this;
@@ -57,7 +68,7 @@ export default class CustomSlashCommandSubcommandGroupBuilder {
   addSubcommand(
     callback: (option: CustomSlashCommandSubcommandBuilder) => CustomSlashCommandSubcommandBuilder | undefined
   ): this {
-    const opt = new CustomSlashCommandSubcommandBuilder();
+    const opt = new CustomSlashCommandSubcommandBuilder(this._languageRoot);
     let res = callback(opt);
     res = res || opt;
     this._customOptions.push(res);

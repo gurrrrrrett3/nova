@@ -1,0 +1,20 @@
+{
+    "commands": {
+        "color": {
+            "name": "color",
+            "description": "Set your color!",
+            "options": {
+                "color": {
+                    "name": "color",
+                    "description": "The color to set. Either a valid CSS color, or a hex code starting with '#'"
+                }
+            }
+        }
+    },
+    "error": {
+        "colorNotFound": "Color {{color}} not found, or is invalid."
+    },
+    "success": {
+        "colorAssigned": "{{color}} assigned."
+    }
+}

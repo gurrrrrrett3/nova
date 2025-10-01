@@ -7,6 +7,8 @@ import {
 } from "discord.js";
 import CustomSlashCommandIntegerOption from "./customSlashCommandIntegerOption.js";
 import CustomSlashCommandNumberOption from "./customSlashCommandNumberOption.js";
+import LanguageLoader from "../languageLoader.js";
+import { t } from "i18next";
 
 export default class CustomSlashCommandStringOption {
   private _builder: SlashCommandStringOption = new SlashCommandStringOption();
@@ -21,10 +23,17 @@ export default class CustomSlashCommandStringOption {
     }[]
   >;
 
-  constructor() { }
+  constructor(private _languageRoot?: string) { }
 
   setName(name: string) {
     this._builder.setName(name);
+
+    if (this._languageRoot) {
+      this.setNameLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.options.${this.name}.name`))
+      this.setDescription(t(`${this._languageRoot}.options.${this.name}.description`))
+      this.setDescriptionLocalizations(LanguageLoader.getKeyLocalizations(`${this._languageRoot}.${this.name}.description`))
+    }
+
     return this;
   }
 

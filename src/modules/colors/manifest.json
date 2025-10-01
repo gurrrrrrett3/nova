@@ -1,0 +1,8 @@
+{
+    "name": "Color Roles",
+    "description": "No description provided",
+    "version": "1.0.0",
+    "intents": [
+        "Guilds"
+    ]
+}
