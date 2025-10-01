@@ -1,6 +1,6 @@
 import Core, { bot, db } from "../../core/index.js";
 import Module from "../../core/base/module.js";
-import { Guild, GuildResolvable, Role, UserResolvable } from "discord.js";
+import { Events, Guild, GuildResolvable, Role, UserResolvable } from "discord.js";
 import ColorRole from "./entities/colorRole.entity.js";
 
 export default class ColorsModule extends Module {
@@ -18,6 +18,31 @@ export default class ColorsModule extends Module {
     }
 
     async onLoad(): Promise<boolean> {
+
+        bot.client.on(Events.GuildRoleUpdate, async (oldRole: Role, newRole: Role) => {
+            if (oldRole.name == ColorsModule.CONTROL_ROLE_NAME) {
+                if (oldRole.position != newRole.position) {
+                    const colorRoleEntities = await db.em.find(ColorRole, {
+                        guildId: oldRole.guild.id
+                    })
+
+                    oldRole.guild.roles.setPositions(
+                        colorRoleEntities
+                            .sort((a, b) => b.roleId.localeCompare(a.roleId))
+                            .map((role, index) => ({
+                                role: role.roleId,
+                                position: newRole.position - index
+                            }))
+                    ).catch()
+                }
+
+                if (newRole.name != oldRole.name) {
+                    await newRole.edit({
+                        name: ColorsModule.CONTROL_ROLE_NAME
+                    }).catch()
+                }
+            }
+        })
 
         return true
     }
