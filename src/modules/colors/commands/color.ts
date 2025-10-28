@@ -42,7 +42,7 @@ const Command = new SlashCommandBuilder()
             await interaction.editReply({
                 embeds: [
                     EmbedUtil.errorEmbed(interaction.guild)
-                        .setTitle("Error")
+                        .setTitle(t("core:error"))
                         .setDescription(t("colors:error.colorNotFound", { color }))
                 ]
             })
@@ -52,7 +52,7 @@ const Command = new SlashCommandBuilder()
         await interaction.editReply({
             embeds: [
                 EmbedUtil.successEmbed(interaction.guild)
-                    .setTitle("Success")
+                    .setTitle(t("core:success"))
                     .setDescription(t("colors:success.colorAssigned", { color: res!.toString() }))
             ]
         })

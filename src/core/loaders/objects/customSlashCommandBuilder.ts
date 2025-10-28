@@ -27,6 +27,7 @@ export default class CommandBuilder {
   private _builder = new SlashCommandBuilder();
   private _module = "";
   private _languageRoot?: string
+  private _meta: Record<string, any> = {}
   private _customOptions: (
     | CustomSlashCommandStringOption
     | CustomSlashCommandIntegerOption
